@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:calculator/button.dart';
 import 'package:function_tree/function_tree.dart';
 
-import 'button.dart' show CustomCircleButton;
-
 void main() => runApp(MaterialApp(home: Home()));
 
 class Home extends StatefulWidget {
@@ -35,24 +33,18 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _displayController.addListener(_onDisplayTextChanged); // Add listener
+    _displayController.addListener(_scrollToEndHorizontal); // Add listener
     _focusNode.requestFocus(); // Ensure TextField has focus if needed for cursor
   }
 
   @override
   void dispose() {
-    _displayController.removeListener(_onDisplayTextChanged); // Remove listener
+    _displayController.removeListener(_scrollToEndHorizontal); // Remove listener
     _displayController.dispose();
     _resultController.dispose();
     _mainDisplayScrollController.dispose();
     _focusNode.dispose();
     super.dispose();
-  }
-
-  void _onDisplayTextChanged() {
-    // This will be called whenever _displayController.text changes
-    print("Listener: Display text changed to: ${_displayController.text}");
-    _scrollToEndHorizontal();
   }
 
   @override
@@ -115,7 +107,7 @@ class _HomeState extends State<Home> {
           SingleChildScrollView(
             reverse: true,
             child: Container(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 9),
               child: TextField(
                 keyboardType: TextInputType.none,
                 autofocus: false,
