@@ -45,7 +45,6 @@ class CustomCircleButton extends StatelessWidget {
           width: width ?? 74,
           child: FloatingActionButton(
             onPressed: () {
-
               onClick?.call();
             },
 

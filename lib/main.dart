@@ -12,11 +12,48 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-   // + - * /
 
   // ignore: prefer_final_fields
   TextEditingController _displayController = TextEditingController();
   TextEditingController _resultController = TextEditingController();
+
+  final ScrollController _mainDisplayScrollController = ScrollController();
+  final FocusNode _focusNode = FocusNode();
+
+  void _scrollToEndHorizontal() {
+    if (_mainDisplayScrollController.hasClients) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _mainDisplayScrollController.animateTo(
+          _mainDisplayScrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 100), // Adjust duration
+          curve: Curves.easeOut,                 // Adjust animation curve
+        );
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _displayController.addListener(_onDisplayTextChanged); // Add listener
+    _focusNode.requestFocus(); // Ensure TextField has focus if needed for cursor
+  }
+
+  @override
+  void dispose() {
+    _displayController.removeListener(_onDisplayTextChanged); // Remove listener
+    _displayController.dispose();
+    _resultController.dispose();
+    _mainDisplayScrollController.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _onDisplayTextChanged() {
+    // This will be called whenever _displayController.text changes
+    print("Listener: Display text changed to: ${_displayController.text}");
+    _scrollToEndHorizontal();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +77,8 @@ class _HomeState extends State<Home> {
         children: [
           SingleChildScrollView(
             reverse: true,
-
             // Display Controller Update
             child: Container(
-              color: Colors.blue,
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: TextField(
                 keyboardType: TextInputType.none,
@@ -56,6 +91,7 @@ class _HomeState extends State<Home> {
                 cursorRadius: Radius.circular(1),
                 textAlign: TextAlign.end,
                 controller: _displayController,
+                scrollController: _mainDisplayScrollController,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 50,
@@ -70,6 +106,8 @@ class _HomeState extends State<Home> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                maxLines: 1,
+                minLines: 1,
               ),
             ),
           ),
@@ -77,25 +115,22 @@ class _HomeState extends State<Home> {
           SingleChildScrollView(
             reverse: true,
             child: Container(
-              color: Colors.red,
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: TextField(
                 keyboardType: TextInputType.none,
                 autofocus: false,
-                enabled: false,
+                enabled: true,
                 showCursor: false,
                 readOnly: true,
                 enableInteractiveSelection: false,
                 textAlign: TextAlign.end,
-                controller : _resultController,
+                controller: _resultController,
                 style: TextStyle(
                   color: Colors.white38,
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
                 ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                ),
+                decoration: InputDecoration(border: InputBorder.none),
               ),
             ),
           ),
@@ -334,16 +369,19 @@ class _HomeState extends State<Home> {
     String prefixText = _displayController.text.substring(0, cursorPos);
     String suffixText = _displayController.text.substring(cursorPos);
 
-    if (((cursorPos == _displayController.text.indexOf("-") ||
-                cursorPos == _displayController.text.indexOf("+") ||
-                cursorPos == _displayController.text.indexOf("/") ||
-                cursorPos == _displayController.text.indexOf("*")) ||
-            ((cursorPos == _displayController.text.indexOf("-") + 1 ||
-                cursorPos == _displayController.text.indexOf("+") + 1 ||
-                cursorPos == _displayController.text.indexOf("/") + 1 ||
-                cursorPos == _displayController.text.indexOf("*") + 1))) &&
-        (value == "-" || value == "+" || value == "/" || value == "*")) {
-      value = "";
+    // Option 2 (using RegExp)
+    if (RegExp(r'[+\-\\\*]').hasMatch(_displayController.text)) {
+      if (((cursorPos == _displayController.text.indexOf("-") ||
+                  cursorPos == _displayController.text.indexOf("+") ||
+                  cursorPos == _displayController.text.indexOf("/") ||
+                  cursorPos == _displayController.text.indexOf("*")) ||
+              ((cursorPos == _displayController.text.indexOf("-") + 1 ||
+                  cursorPos == _displayController.text.indexOf("+") + 1 ||
+                  cursorPos == _displayController.text.indexOf("/") + 1 ||
+                  cursorPos == _displayController.text.indexOf("*") + 1))) &&
+          (value == "-" || value == "+" || value == "/" || value == "*")) {
+        value = "";
+      }
     }
 
     if (value == "." && _displayController.text.contains(".")) {
@@ -371,8 +409,7 @@ class _HomeState extends State<Home> {
       }
     }
 
-    if ((_displayController.text + value).length !=
-        _displayController.text.length) {
+    if (value != "") {
       _displayController.text = prefixText + value + suffixText;
       _displayController.selection = TextSelection.fromPosition(
         TextPosition(offset: cursorPos + 1),
@@ -409,9 +446,10 @@ class _HomeState extends State<Home> {
     if (_displayController.text == "") return;
     String neg = "-";
 
-    if(!(_displayController.text.startsWith("-"))){
+    if (!(_displayController.text.startsWith("-"))) {
       _displayController.text = "($neg" + _displayController.text + ")";
-    }else _displayController.text = _displayController.text.substring(1);
+    } else
+      _displayController.text = _displayController.text.substring(1);
     setState(() {
       update_resultController();
     });
@@ -427,14 +465,18 @@ class _HomeState extends State<Home> {
 
   void update_resultController() {
     if (_displayController.text.isNotEmpty) {
-      _resultController.text = removeTrailingZeros(_displayController.text.interpret().toDouble());
+      _resultController.text = removeTrailingZeros(
+        _displayController.text.interpret().toDouble(),
+      );
 
       if (_resultController.text.endsWith(".0")) {
-        _resultController.text = _resultController.text.substring(0, _resultController.text.indexOf("."));
+        _resultController.text = _resultController.text.substring(
+          0,
+          _resultController.text.indexOf("."),
+        );
       }
-    }else {
+    } else {
       _resultController.text = "";
     }
-    print(_resultController);
   }
 }
