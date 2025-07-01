@@ -1,0 +1,506 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:calculator/button.dart';
+import 'package:function_tree/function_tree.dart';
+
+class calculatorScreen extends StatefulWidget {
+  const calculatorScreen({super.key});
+
+  @override
+  State<calculatorScreen> createState() => _calculatorScreenState();
+}
+
+class _calculatorScreenState extends State<calculatorScreen> {
+  // bool dotCheck = false;
+
+  // ignore: prefer_final_fields
+  TextEditingController _displayController = TextEditingController();
+  TextEditingController _resultController = TextEditingController();
+
+  // Auto Scroll
+  final ScrollController _mainDisplayScrollController = ScrollController();
+  final FocusNode _focusNode = FocusNode();
+
+  void _scrollToEndHorizontal() {
+    if (_mainDisplayScrollController.hasClients) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _mainDisplayScrollController.animateTo(
+          _mainDisplayScrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 100), // Adjust duration
+          curve: Curves.easeOut, // Adjust animation curve
+        );
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _displayController.addListener(_scrollToEndHorizontal); // Add listener
+    _focusNode
+        .requestFocus(); // Ensure TextField has focus if needed for cursor
+  }
+
+  @override
+  void dispose() {
+    _displayController.removeListener(
+      _scrollToEndHorizontal,
+    ); // Remove listener
+    _displayController.dispose();
+    _resultController.dispose();
+    _mainDisplayScrollController.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: Colors.black87,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.settings, color: Theme.of(context).primaryColor),
+            onPressed: () {
+              Navigator.pushNamed(context, '/settingsScreen');
+            },
+          ),
+        ],
+      ),
+
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          SingleChildScrollView(
+            reverse: true,
+            // Display Controller Update
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: TextField(
+                keyboardType: TextInputType.none,
+                autofocus: true,
+                enabled: true,
+                showCursor: true, // <--- SET THIS TO TRUE TO SHOW THE CURSOR
+                cursorColor: Colors.white, // <--- Optional: Set cursor color
+                cursorWidth: 2.0,
+                cursorHeight: 60, // <--- Optional: Set cursor width
+                cursorRadius: Radius.circular(1),
+                textAlign: TextAlign.end,
+                controller: _displayController,
+                scrollController: _mainDisplayScrollController,
+                style: TextStyle(color: Colors.white, fontSize: 50),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "0",
+                  hintStyle: TextStyle(
+                    color: Colors.white38,
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                maxLines: 1,
+                minLines: 1,
+              ),
+            ),
+          ),
+
+          SingleChildScrollView(
+            reverse: true,
+            child: Container(
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 9),
+              child: TextField(
+                keyboardType: TextInputType.none,
+                autofocus: false,
+                enabled: true,
+                showCursor: false,
+                readOnly: true,
+                enableInteractiveSelection: false,
+                textAlign: TextAlign.end,
+                controller: _resultController,
+                style: TextStyle(
+                  color: Colors.white38,
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                ),
+                decoration: InputDecoration(border: InputBorder.none),
+              ),
+            ),
+          ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // !st COntainer
+            children: [
+              CustomCircleButton(
+                title: "AC",
+                font_size: 24.5,
+                color: Colors.grey,
+                onClick: () {
+                  buttonTap("AC");
+                },
+              ),
+              CustomCircleButton(
+                icon_size: 29,
+                color: Colors.grey,
+                icondata: Icons.backspace_outlined,
+                onClick: () {
+                  buttonTap("del");
+                },
+              ),
+              CustomCircleButton(
+                title: "-/+",
+                font_size: 28,
+                color: Colors.grey,
+                onClick: () {
+                  buttonTap("-/+");
+                },
+              ),
+              CustomCircleButton(
+                title: "÷",
+                font_size: 30,
+                color: Colors.amber,
+                splashColor: Colors.amberAccent,
+                onClick: () {
+                  buttonTap("/");
+                },
+              ),
+            ], // children
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // !st COntainer
+            children: [
+              CustomCircleButton(
+                title: "7",
+                font_size: 28,
+                color: Colors.white38,
+                onClick: () {
+                  buttonTap("7");
+                },
+              ),
+              CustomCircleButton(
+                title: "8",
+                font_size: 28,
+                color: Colors.white38,
+                onClick: () {
+                  buttonTap("8");
+                },
+              ),
+              CustomCircleButton(
+                title: "9",
+                font_size: 28,
+                color: Colors.white38,
+                onClick: () {
+                  buttonTap("9");
+                },
+              ),
+              CustomCircleButton(
+                title: "*",
+                font_size: 28,
+                color: Colors.amber,
+                splashColor: Colors.amberAccent,
+                onClick: () {
+                  buttonTap("*");
+                },
+              ),
+            ], // children
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // !st COntainer
+            children: [
+              CustomCircleButton(
+                title: "4",
+                font_size: 28,
+                color: Colors.white38,
+                onClick: () {
+                  buttonTap("4");
+                },
+              ),
+              CustomCircleButton(
+                title: "5",
+                font_size: 28,
+                color: Colors.white38,
+                onClick: () {
+                  buttonTap("5");
+                },
+              ),
+              CustomCircleButton(
+                title: "6",
+                font_size: 28,
+                color: Colors.white38,
+                onClick: () {
+                  buttonTap("6");
+                },
+              ),
+              CustomCircleButton(
+                title: "-",
+                font_size: 28,
+                color: Colors.amber,
+                splashColor: Colors.amberAccent,
+                onClick: () {
+                  buttonTap("-");
+                },
+              ),
+            ], // children
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // !st COntainer
+            children: [
+              CustomCircleButton(
+                title: "1",
+                font_size: 28,
+                color: Colors.white38,
+                onClick: () {
+                  buttonTap("1");
+                },
+              ),
+              CustomCircleButton(
+                title: "2",
+                font_size: 28,
+                color: Colors.white38,
+                onClick: () {
+                  buttonTap("2");
+                },
+              ),
+              CustomCircleButton(
+                title: "3",
+                font_size: 28,
+                color: Colors.white38,
+                onClick: () {
+                  buttonTap("3");
+                },
+              ),
+              CustomCircleButton(
+                title: "+",
+                font_size: 28,
+                color: Colors.amber,
+                splashColor: Colors.amberAccent,
+                onClick: () {
+                  buttonTap("+");
+                },
+              ),
+            ], // children
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // !st COntainer
+            children: [
+              // CustomCircleButton(title: "%", font_size: 28, color: Colors.white38,),
+              CustomCircleButton(
+                title: "0",
+                font_size: 28,
+                color: Colors.white38,
+                flex: 2,
+                shape: 60,
+                onClick: () {
+                  buttonTap("0");
+                },
+              ),
+              CustomCircleButton(
+                title: ".",
+                font_size: 28,
+                color: Colors.white38,
+
+                onClick: () {
+                  buttonTap(".");
+                },
+              ),
+              CustomCircleButton(
+                title: "=",
+                font_size: 28,
+                color: Colors.amber,
+                splashColor: Colors.amberAccent,
+                onClick: () {
+                  buttonTap("=");
+                },
+              ),
+            ], // children
+          ),
+        ], //children
+      ),
+    );
+  }
+
+  void buttonTap(String value) {
+    if (value == "AC") {
+      allclr();
+      return;
+    } else if (value == "del") {
+      delete();
+      return;
+    } else if (value == "-/+") {
+      negpos();
+      return;
+    } else if (value == "=") {
+      calculate();
+      return;
+    }
+    setValue(value);
+    update_resultController();
+  }
+
+  void calculate() {
+    _displayController.text = _resultController.text;
+    _resultController.text = "";
+    setState(() {});
+  }
+
+  void setValue(String value) {
+    // Experiment
+    var cursorPos = _displayController.selection.baseOffset;
+    String prefixText = _displayController.text.substring(0, cursorPos);
+    String suffixText = _displayController.text.substring(cursorPos);
+
+    // Option 2 (using RegExp)
+    if (RegExp(r'[+\-\\\*]').hasMatch(_displayController.text)) {
+      if (((cursorPos == _displayController.text.indexOf("-") ||
+                  cursorPos == _displayController.text.indexOf("+") ||
+                  cursorPos == _displayController.text.indexOf("/") ||
+                  cursorPos == _displayController.text.indexOf("*") ||
+                  cursorPos == _displayController.text.indexOf(".")) ||
+              ((cursorPos == _displayController.text.indexOf("-") + 1 ||
+                  cursorPos == _displayController.text.indexOf("+") + 1 ||
+                  cursorPos == _displayController.text.indexOf("/") + 1 ||
+                  cursorPos == _displayController.text.indexOf("*") + 1 ||
+                  cursorPos == _displayController.text.indexOf(".") + 1))) &&
+          (value == "-" ||
+              value == "+" ||
+              value == "/" ||
+              value == "*" ||
+              value == ".")) {
+        value = "";
+      }
+    }
+
+    if (value == ".") {
+      if (dotCheck()) {
+        value = "";
+      } else if (_displayController.text.isEmpty) {
+        value = "0.";
+        // _displayController.selection = TextSelection.fromPosition(
+        //   TextPosition(offset: cursorPos + 1),
+        // );
+      }
+    }
+
+    if (_displayController.text.contains("(") ||
+        _displayController.text.contains(")")) {
+      if (((cursorPos == _displayController.text.indexOf("(") ||
+              (cursorPos == _displayController.text.indexOf(")") + 1)) &&
+          (value == "0" ||
+              value == "1" ||
+              value == "2" ||
+              value == "3" ||
+              value == "4" ||
+              value == "5" ||
+              value == "6" ||
+              value == "7" ||
+              value == "8" ||
+              value == "9" ||
+              value == "."))) {
+        value = "";
+      }
+    }
+
+    if (value != "") {
+      _displayController.text = prefixText + value + suffixText;
+      _displayController.selection = TextSelection.fromPosition(
+        TextPosition(offset: cursorPos + value.length),
+      );
+    }
+
+    setState(() {});
+  }
+
+  void delete() {
+    var cursorPos = _displayController.selection.baseOffset;
+    String prefixText = _displayController.text.substring(0, cursorPos);
+    String suffixText = _displayController.text.substring(cursorPos);
+
+    _displayController.text =
+        prefixText.substring(0, cursorPos - 1) + suffixText;
+
+    _displayController.selection = TextSelection.fromPosition(
+      TextPosition(offset: cursorPos - 1),
+    );
+
+    update_resultController();
+    setState(() {});
+  }
+
+  void allclr() {
+    setState(() {
+      _displayController.text = "";
+      _resultController.text = "";
+    });
+  }
+
+  void negpos() {
+    if (_displayController.text == "") return;
+    String neg = "-";
+
+    if (!(_displayController.text.startsWith("-"))) {
+      _displayController.text = "($neg" + _displayController.text + ")";
+    } else
+      _displayController.text = _displayController.text.substring(1);
+    setState(() {
+      update_resultController();
+    });
+  }
+
+  bool dotCheck() {
+    int x = _displayController.text.lastIndexOf("+") == -1
+        ? 0
+        : _displayController.text.lastIndexOf("+");
+    int y = _displayController.text.lastIndexOf("-") == -1
+        ? 0
+        : _displayController.text.lastIndexOf("-");
+    int z = _displayController.text.lastIndexOf("*") == -1
+        ? 0
+        : _displayController.text.lastIndexOf("*");
+    int w = _displayController.text.lastIndexOf("/") == -1
+        ? 0
+        : _displayController.text.lastIndexOf("/");
+
+    int lastpos = max(max(x, y), max(w, z));
+
+    if (_displayController.text.substring(lastpos).contains(".")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  String removeTrailingZeros(double n) {
+    return double.parse(
+      n.toStringAsFixed(
+        n.truncateToDouble() == n ? 0 : n.toString().split('.')[1].length,
+      ),
+    ).toString();
+  }
+
+  void update_resultController() {
+    if (_displayController.text.isNotEmpty) {
+      _resultController.text = removeTrailingZeros(
+        _displayController.text.interpret().toDouble(),
+      );
+
+      if (_resultController.text.endsWith(".0")) {
+        _resultController.text = _resultController.text.substring(
+          0,
+          _resultController.text.indexOf("."),
+        );
+      }
+      if((_resultController.text.length-_resultController.text.indexOf(".")) > 7){
+        _resultController.text = _resultController.text.substring(0, _resultController.text.indexOf(".")+7);
+      }
+    } else {
+      _resultController.text = "";
+    }
+  }
+}

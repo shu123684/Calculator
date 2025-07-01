@@ -37,7 +37,6 @@ class CustomCircleButton extends StatelessWidget {
 
         decoration: BoxDecoration(
           shape: shape == null ? BoxShape.circle: BoxShape.rectangle,
-          // border: Border.all(color: this.color, width: 5),
         ),
 
         child: SizedBox(
@@ -62,7 +61,7 @@ class CustomCircleButton extends StatelessWidget {
                     child: Text(
                       title ?? "",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColor,
                         fontSize: font_size == null ? 25 : font_size,
                       ),
                     ),
@@ -78,7 +77,7 @@ class CustomCircleButton extends StatelessWidget {
                         size: icon_size == null
                             ? 25
                             : icon_size, // icondata is not null here
-                        color: Colors.white, // Style your icon
+                        color: Theme.of(context).primaryColor, // Style your icon
                       ),
                     ),
                   ),
