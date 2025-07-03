@@ -2,8 +2,8 @@ class Btn {
   static const String del = "del";
   static const String clr = "AC";
   static const String negpos = "-/+";
-  static const String multiply = "*";
   static const String divide = "/";
+  static const String multiply = "*";
   static const String add = "+";
   static const String subtract = "-";
   static const String calculate = "=";

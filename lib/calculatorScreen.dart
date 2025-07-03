@@ -335,7 +335,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
       delete();
       return;
     } else if (value == Btn.negpos) {
-      print ("negpos");
+      print("negpos");
       negpos();
       return;
     } else if (value == Btn.calculate) {
@@ -365,11 +365,15 @@ class _calculatorScreenState extends State<calculatorScreen> {
                   cursorPos == _displayController.text.indexOf(Btn.divide) ||
                   cursorPos == _displayController.text.indexOf(Btn.multiply) ||
                   cursorPos == _displayController.text.indexOf(Btn.dot)) ||
-              ((cursorPos == _displayController.text.indexOf(Btn.subtract) + 1 ||
+              ((cursorPos ==
+                      _displayController.text.indexOf(Btn.subtract) + 1 ||
                   cursorPos == _displayController.text.indexOf(Btn.add) + 1 ||
-                  cursorPos == _displayController.text.indexOf(Btn.divide) + 1 ||
-                  cursorPos == _displayController.text.indexOf(Btn.multiply) + 1 ||
-                  cursorPos == _displayController.text.indexOf(Btn.dot) + 1))) &&
+                  cursorPos ==
+                      _displayController.text.indexOf(Btn.divide) + 1 ||
+                  cursorPos ==
+                      _displayController.text.indexOf(Btn.multiply) + 1 ||
+                  cursorPos ==
+                      _displayController.text.indexOf(Btn.dot) + 1))) &&
           (value == Btn.subtract ||
               value == Btn.add ||
               value == Btn.divide ||
@@ -442,15 +446,19 @@ class _calculatorScreenState extends State<calculatorScreen> {
   void negpos() {
     if (_displayController.text == "") return;
 
-    if(_displayController.text.startsWith("(-") && _displayController.text.endsWith(")")){
-      _displayController.text = _displayController.text.substring(2, _displayController.text.length - 1);
+    if (_displayController.text.startsWith("(-") &&
+        _displayController.text.endsWith(")")) {
+      _displayController.text = _displayController.text.substring(
+        2,
+        _displayController.text.length - 1,
+      );
     }
-    if(RegExp(r"[-+*/]").hasMatch(_displayController.text)){
+    if (RegExp(r"[-+*/]").hasMatch(_displayController.text)) {
       _displayController.text = "-(" + _displayController.text + ")";
-    } else{
-      if(_displayController.text.startsWith(Btn.subtract)){
+    } else {
+      if (_displayController.text.startsWith(Btn.subtract)) {
         _displayController.text = _displayController.text.substring(1);
-      } else{
+      } else {
         _displayController.text = Btn.subtract + _displayController.text;
       }
     }
@@ -469,15 +477,16 @@ class _calculatorScreenState extends State<calculatorScreen> {
     for (
       i;
       i < _displayController.text.length &&
-          (_displayController.text[i] != Btn.add ||
-          _displayController.text[i] != Btn.subtract ||
-          _displayController.text[i] != Btn.multiply ||
-          _displayController.text[i] != Btn.divide
-          );
+          (_displayController.text[i] != Btn.add &&
+              _displayController.text[i] != Btn.subtract &&
+              _displayController.text[i] != Btn.multiply &&
+              _displayController.text[i] != Btn.divide);
       i++
     ) {
       if (_displayController.text[i] == Btn.dot) {
         rightcheck = true;
+        print("i: $i");
+        print("right: $rightcheck");
         break;
       }
     }
@@ -485,17 +494,17 @@ class _calculatorScreenState extends State<calculatorScreen> {
     //Left check
     bool leftcheck = false;
     for (
-      j;
-      j < _displayController.text.length &&
-          (_displayController.text[j] != Btn.add ||
-              _displayController.text[j] != Btn.subtract ||
-              _displayController.text[j] != Btn.multiply ||
-              _displayController.text[j] != Btn.divide
-          );
+      j;   j >= 0 &&
+          (_displayController.text[j] != Btn.add &&
+              _displayController.text[j] != Btn.subtract &&
+              _displayController.text[j] != Btn.multiply &&
+              _displayController.text[j] != Btn.divide);
       j--
     ) {
       if (_displayController.text[j] == Btn.dot) {
         leftcheck = true;
+        print("letter: $j");
+        print("left check: $leftcheck");
         break;
       }
     }
