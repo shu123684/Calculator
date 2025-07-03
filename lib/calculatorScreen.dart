@@ -1,8 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:calculator/button.dart';
+// import 'dart:math';
 import 'package:function_tree/function_tree.dart';
+
+import 'package:calculator/button.dart';
+import 'package:calculator/btn.dart';
 
 class calculatorScreen extends StatefulWidget {
   const calculatorScreen({super.key});
@@ -94,7 +95,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
                 style: TextStyle(color: Colors.white, fontSize: 50),
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: "0",
+                  hintText: Btn.n0,
                   hintStyle: TextStyle(
                     color: Colors.white38,
                     fontSize: 50,
@@ -135,11 +136,11 @@ class _calculatorScreenState extends State<calculatorScreen> {
             // !st COntainer
             children: [
               CustomCircleButton(
-                title: "AC",
+                title: Btn.clr,
                 font_size: 24.5,
                 color: Colors.grey,
                 onClick: () {
-                  buttonTap("AC");
+                  buttonTap(Btn.clr);
                 },
               ),
               CustomCircleButton(
@@ -147,15 +148,15 @@ class _calculatorScreenState extends State<calculatorScreen> {
                 color: Colors.grey,
                 icondata: Icons.backspace_outlined,
                 onClick: () {
-                  buttonTap("del");
+                  buttonTap(Btn.del);
                 },
               ),
               CustomCircleButton(
-                title: "-/+",
+                title: Btn.negpos,
                 font_size: 28,
                 color: Colors.grey,
                 onClick: () {
-                  buttonTap("-/+");
+                  buttonTap(Btn.negpos);
                 },
               ),
               CustomCircleButton(
@@ -164,7 +165,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
                 color: Colors.amber,
                 splashColor: Colors.amberAccent,
                 onClick: () {
-                  buttonTap("/");
+                  buttonTap(Btn.divide);
                 },
               ),
             ], // children
@@ -174,36 +175,36 @@ class _calculatorScreenState extends State<calculatorScreen> {
             // !st COntainer
             children: [
               CustomCircleButton(
-                title: "7",
+                title: Btn.n7,
                 font_size: 28,
                 color: Colors.white38,
                 onClick: () {
-                  buttonTap("7");
+                  buttonTap(Btn.n7);
                 },
               ),
               CustomCircleButton(
-                title: "8",
+                title: Btn.n8,
                 font_size: 28,
                 color: Colors.white38,
                 onClick: () {
-                  buttonTap("8");
+                  buttonTap(Btn.n8);
                 },
               ),
               CustomCircleButton(
-                title: "9",
+                title: Btn.n9,
                 font_size: 28,
                 color: Colors.white38,
                 onClick: () {
-                  buttonTap("9");
+                  buttonTap(Btn.n9);
                 },
               ),
               CustomCircleButton(
-                title: "*",
+                title: "×",
                 font_size: 28,
                 color: Colors.amber,
                 splashColor: Colors.amberAccent,
                 onClick: () {
-                  buttonTap("*");
+                  buttonTap(Btn.multiply);
                 },
               ),
             ], // children
@@ -213,36 +214,36 @@ class _calculatorScreenState extends State<calculatorScreen> {
             // !st COntainer
             children: [
               CustomCircleButton(
-                title: "4",
+                title: Btn.n4,
                 font_size: 28,
                 color: Colors.white38,
                 onClick: () {
-                  buttonTap("4");
+                  buttonTap(Btn.n4);
                 },
               ),
               CustomCircleButton(
-                title: "5",
+                title: Btn.n5,
                 font_size: 28,
                 color: Colors.white38,
                 onClick: () {
-                  buttonTap("5");
+                  buttonTap(Btn.n5);
                 },
               ),
               CustomCircleButton(
-                title: "6",
+                title: Btn.n6,
                 font_size: 28,
                 color: Colors.white38,
                 onClick: () {
-                  buttonTap("6");
+                  buttonTap(Btn.n6);
                 },
               ),
               CustomCircleButton(
-                title: "-",
+                title: Btn.subtract,
                 font_size: 28,
                 color: Colors.amber,
                 splashColor: Colors.amberAccent,
                 onClick: () {
-                  buttonTap("-");
+                  buttonTap(Btn.subtract);
                 },
               ),
             ], // children
@@ -252,36 +253,36 @@ class _calculatorScreenState extends State<calculatorScreen> {
             // !st COntainer
             children: [
               CustomCircleButton(
-                title: "1",
+                title: Btn.n1,
                 font_size: 28,
                 color: Colors.white38,
                 onClick: () {
-                  buttonTap("1");
+                  buttonTap(Btn.n1);
                 },
               ),
               CustomCircleButton(
-                title: "2",
+                title: Btn.n2,
                 font_size: 28,
                 color: Colors.white38,
                 onClick: () {
-                  buttonTap("2");
+                  buttonTap(Btn.n2);
                 },
               ),
               CustomCircleButton(
-                title: "3",
+                title: Btn.n3,
                 font_size: 28,
                 color: Colors.white38,
                 onClick: () {
-                  buttonTap("3");
+                  buttonTap(Btn.n3);
                 },
               ),
               CustomCircleButton(
-                title: "+",
+                title: Btn.add,
                 font_size: 28,
                 color: Colors.amber,
                 splashColor: Colors.amberAccent,
                 onClick: () {
-                  buttonTap("+");
+                  buttonTap(Btn.add);
                 },
               ),
             ], // children
@@ -292,31 +293,31 @@ class _calculatorScreenState extends State<calculatorScreen> {
             children: [
               // CustomCircleButton(title: "%", font_size: 28, color: Colors.white38,),
               CustomCircleButton(
-                title: "0",
+                title: Btn.n0,
                 font_size: 28,
                 color: Colors.white38,
                 flex: 2,
                 shape: 60,
                 onClick: () {
-                  buttonTap("0");
+                  buttonTap(Btn.n0);
                 },
               ),
               CustomCircleButton(
-                title: ".",
+                title: Btn.dot,
                 font_size: 28,
                 color: Colors.white38,
 
                 onClick: () {
-                  buttonTap(".");
+                  buttonTap(Btn.dot);
                 },
               ),
               CustomCircleButton(
-                title: "=",
+                title: Btn.calculate,
                 font_size: 28,
                 color: Colors.amber,
                 splashColor: Colors.amberAccent,
                 onClick: () {
-                  buttonTap("=");
+                  buttonTap(Btn.calculate);
                 },
               ),
             ], // children
@@ -327,16 +328,17 @@ class _calculatorScreenState extends State<calculatorScreen> {
   }
 
   void buttonTap(String value) {
-    if (value == "AC") {
+    if (value == Btn.clr) {
       allclr();
       return;
-    } else if (value == "del") {
+    } else if (value == Btn.del) {
       delete();
       return;
-    } else if (value == "-/+") {
+    } else if (value == Btn.negpos) {
+      print ("negpos");
       negpos();
       return;
-    } else if (value == "=") {
+    } else if (value == Btn.calculate) {
       calculate();
       return;
     }
@@ -357,34 +359,31 @@ class _calculatorScreenState extends State<calculatorScreen> {
     String suffixText = _displayController.text.substring(cursorPos);
 
     // Option 2 (using RegExp)
-    if (RegExp(r'[+\-\\\*]').hasMatch(_displayController.text)) {
-      if (((cursorPos == _displayController.text.indexOf("-") ||
-                  cursorPos == _displayController.text.indexOf("+") ||
-                  cursorPos == _displayController.text.indexOf("/") ||
-                  cursorPos == _displayController.text.indexOf("*") ||
-                  cursorPos == _displayController.text.indexOf(".")) ||
-              ((cursorPos == _displayController.text.indexOf("-") + 1 ||
-                  cursorPos == _displayController.text.indexOf("+") + 1 ||
-                  cursorPos == _displayController.text.indexOf("/") + 1 ||
-                  cursorPos == _displayController.text.indexOf("*") + 1 ||
-                  cursorPos == _displayController.text.indexOf(".") + 1))) &&
-          (value == "-" ||
-              value == "+" ||
-              value == "/" ||
-              value == "*" ||
-              value == ".")) {
+    if (RegExp(r"[-+*/.]").hasMatch(_displayController.text)) {
+      if (((cursorPos == _displayController.text.indexOf(Btn.subtract) ||
+                  cursorPos == _displayController.text.indexOf(Btn.add) ||
+                  cursorPos == _displayController.text.indexOf(Btn.divide) ||
+                  cursorPos == _displayController.text.indexOf(Btn.multiply) ||
+                  cursorPos == _displayController.text.indexOf(Btn.dot)) ||
+              ((cursorPos == _displayController.text.indexOf(Btn.subtract) + 1 ||
+                  cursorPos == _displayController.text.indexOf(Btn.add) + 1 ||
+                  cursorPos == _displayController.text.indexOf(Btn.divide) + 1 ||
+                  cursorPos == _displayController.text.indexOf(Btn.multiply) + 1 ||
+                  cursorPos == _displayController.text.indexOf(Btn.dot) + 1))) &&
+          (value == Btn.subtract ||
+              value == Btn.add ||
+              value == Btn.divide ||
+              value == Btn.multiply ||
+              value == Btn.dot)) {
         value = "";
       }
     }
 
-    if (value == ".") {
+    if (value == Btn.dot) {
       if (dotCheck()) {
         value = "";
       } else if (_displayController.text.isEmpty) {
         value = "0.";
-        // _displayController.selection = TextSelection.fromPosition(
-        //   TextPosition(offset: cursorPos + 1),
-        // );
       }
     }
 
@@ -392,17 +391,17 @@ class _calculatorScreenState extends State<calculatorScreen> {
         _displayController.text.contains(")")) {
       if (((cursorPos == _displayController.text.indexOf("(") ||
               (cursorPos == _displayController.text.indexOf(")") + 1)) &&
-          (value == "0" ||
-              value == "1" ||
-              value == "2" ||
-              value == "3" ||
-              value == "4" ||
-              value == "5" ||
-              value == "6" ||
-              value == "7" ||
-              value == "8" ||
-              value == "9" ||
-              value == "."))) {
+          (value == Btn.n0 ||
+              value == Btn.n1 ||
+              value == Btn.n2 ||
+              value == Btn.n3 ||
+              value == Btn.n4 ||
+              value == Btn.n5 ||
+              value == Btn.n6 ||
+              value == Btn.n7 ||
+              value == Btn.n8 ||
+              value == Btn.n9 ||
+              value == Btn.dot))) {
         value = "";
       }
     }
@@ -442,34 +441,65 @@ class _calculatorScreenState extends State<calculatorScreen> {
 
   void negpos() {
     if (_displayController.text == "") return;
-    String neg = "-";
 
-    if (!(_displayController.text.startsWith("-"))) {
-      _displayController.text = "($neg" + _displayController.text + ")";
-    } else
-      _displayController.text = _displayController.text.substring(1);
+    if(_displayController.text.startsWith("(-") && _displayController.text.endsWith(")")){
+      _displayController.text = _displayController.text.substring(2, _displayController.text.length - 1);
+    }
+    if(RegExp(r"[-+*/]").hasMatch(_displayController.text)){
+      _displayController.text = "-(" + _displayController.text + ")";
+    } else{
+      if(_displayController.text.startsWith(Btn.subtract)){
+        _displayController.text = _displayController.text.substring(1);
+      } else{
+        _displayController.text = Btn.subtract + _displayController.text;
+      }
+    }
     setState(() {
       update_resultController();
     });
   }
 
   bool dotCheck() {
-    int x = _displayController.text.lastIndexOf("+") == -1
-        ? 0
-        : _displayController.text.lastIndexOf("+");
-    int y = _displayController.text.lastIndexOf("-") == -1
-        ? 0
-        : _displayController.text.lastIndexOf("-");
-    int z = _displayController.text.lastIndexOf("*") == -1
-        ? 0
-        : _displayController.text.lastIndexOf("*");
-    int w = _displayController.text.lastIndexOf("/") == -1
-        ? 0
-        : _displayController.text.lastIndexOf("/");
+    if (!_displayController.text.contains(Btn.dot)) return false;
+    int i = _displayController.selection.baseOffset - 1;
+    int j = _displayController.selection.baseOffset - 1;
 
-    int lastpos = max(max(x, y), max(w, z));
+    // right check
+    bool rightcheck = false;
+    for (
+      i;
+      i < _displayController.text.length &&
+          (_displayController.text[i] != Btn.add ||
+          _displayController.text[i] != Btn.subtract ||
+          _displayController.text[i] != Btn.multiply ||
+          _displayController.text[i] != Btn.divide
+          );
+      i++
+    ) {
+      if (_displayController.text[i] == Btn.dot) {
+        rightcheck = true;
+        break;
+      }
+    }
 
-    if (_displayController.text.substring(lastpos).contains(".")) {
+    //Left check
+    bool leftcheck = false;
+    for (
+      j;
+      j < _displayController.text.length &&
+          (_displayController.text[j] != Btn.add ||
+              _displayController.text[j] != Btn.subtract ||
+              _displayController.text[j] != Btn.multiply ||
+              _displayController.text[j] != Btn.divide
+          );
+      j--
+    ) {
+      if (_displayController.text[j] == Btn.dot) {
+        leftcheck = true;
+        break;
+      }
+    }
+    if (leftcheck || rightcheck) {
       return true;
     } else {
       return false;
@@ -493,11 +523,16 @@ class _calculatorScreenState extends State<calculatorScreen> {
       if (_resultController.text.endsWith(".0")) {
         _resultController.text = _resultController.text.substring(
           0,
-          _resultController.text.indexOf("."),
+          _resultController.text.indexOf(Btn.dot),
         );
       }
-      if((_resultController.text.length-_resultController.text.indexOf(".")) > 7){
-        _resultController.text = _resultController.text.substring(0, _resultController.text.indexOf(".")+7);
+      if ((_resultController.text.length -
+              _resultController.text.indexOf(Btn.dot)) >
+          7) {
+        _resultController.text = _resultController.text.substring(
+          0,
+          _resultController.text.indexOf(Btn.dot) + 7,
+        );
       }
     } else {
       _resultController.text = "";
