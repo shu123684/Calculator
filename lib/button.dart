@@ -11,7 +11,7 @@ class CustomCircleButton extends StatelessWidget {
   final double? width;
   final double? shape;
   final int? flex;
-  final VoidCallback? onClick;
+  final VoidCallback onClick;
 
   const CustomCircleButton({
     super.key,
@@ -25,7 +25,7 @@ class CustomCircleButton extends StatelessWidget {
     this.width,
     this.shape,
     this.flex,
-    this.onClick,
+    required this.onClick,
   });
 
   @override
@@ -43,7 +43,7 @@ class CustomCircleButton extends StatelessWidget {
           height: height,
           child: FloatingActionButton(
             onPressed: () {
-              onClick?.call();
+              onClick.call();
             },
 
             shape: shape == null
@@ -61,7 +61,7 @@ class CustomCircleButton extends StatelessWidget {
                       title ?? "",
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
-                        fontSize: font_size == null ? 25 : font_size,
+                        fontSize: font_size ?? 25,
                       ),
                     ),
                   )
@@ -69,13 +69,11 @@ class CustomCircleButton extends StatelessWidget {
                     // If icon data exists, show Icon
                     child: IconButton(
                       onPressed: (){
-                        onClick?.call();
+                        onClick.call();
                       },
                       icon: Icon(
                         icondata,
-                        size: icon_size == null
-                            ? 25
-                            : icon_size, // icondata is not null here
+                        size: icon_size ?? 25, // icondata is not null here
                         color: Theme.of(context).primaryColor, // Style your icon
                       ),
                     ),

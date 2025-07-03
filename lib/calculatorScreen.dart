@@ -318,16 +318,9 @@ class _calculatorScreenState extends State<calculatorScreen> {
                   // !st Container
                   children: [
                     CustomCircleButton(
-                      title: Btn.per,
-                      font_size: 28,
-                      color: Colors.white38,
-                      height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.per);
-                      },
-                    ),
-                    CustomCircleButton(
                       title: Btn.n0,
+                      flex: 2,
+                      shape: 60,
                       font_size: 28,
                       color: Colors.white38,
                       height: btnHeight,
@@ -340,7 +333,6 @@ class _calculatorScreenState extends State<calculatorScreen> {
                       font_size: 28,
                       color: Colors.white38,
                       height: btnHeight,
-
                       onClick: () {
                         buttonTap(Btn.dot);
                       },
@@ -374,9 +366,6 @@ class _calculatorScreenState extends State<calculatorScreen> {
       return;
     } else if (value == Btn.negpos) {
       negpos();
-      return;
-    } else if (value == Btn.per) {
-      percentage();
       return;
     } else if (value == Btn.calculate) {
       calculate();
@@ -502,18 +491,6 @@ class _calculatorScreenState extends State<calculatorScreen> {
         _displayController.text = Btn.subtract + _displayController.text;
       }
     }
-    setState(() {
-      update_resultController();
-    });
-  }
-
-  void percentage() {
-    if (_displayController.text == "") return;
-    _displayController.text = "(${_displayController.text})%";
-
-    double num = _displayController.text.interpret().toDouble() / 100;
-    _resultController.text = num.toString();
-
     setState(() {
       update_resultController();
     });
