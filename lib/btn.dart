@@ -1,6 +1,7 @@
 class Btn {
   static const String del = "del";
   static const String clr = "AC";
+  static const String per = "%";
   static const String negpos = "-/+";
   static const String divide = "/";
   static const String multiply = "*";

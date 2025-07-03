@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'dart:math';
 import 'package:function_tree/function_tree.dart';
 
 import 'package:calculator/button.dart';
@@ -13,7 +12,8 @@ class calculatorScreen extends StatefulWidget {
 }
 
 class _calculatorScreenState extends State<calculatorScreen> {
-  // bool dotCheck = false;
+
+
 
   // ignore: prefer_final_fields
   TextEditingController _displayController = TextEditingController();
@@ -28,7 +28,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _mainDisplayScrollController.animateTo(
           _mainDisplayScrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 100), // Adjust duration
+          duration: Duration(milliseconds: 80), // Adjust duration
           curve: Curves.easeOut, // Adjust animation curve
         );
       });
@@ -57,6 +57,8 @@ class _calculatorScreenState extends State<calculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final btnSpace = MediaQuery.of(context).size.height*.54;
+    final btnHeight = (btnSpace-45)/5;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -130,197 +132,233 @@ class _calculatorScreenState extends State<calculatorScreen> {
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 1),
+            child: Divider(),
+          ),
+          SizedBox(
+            height: btnSpace,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // 1st Container
+                  children: [
+                    CustomCircleButton(
+                      title: Btn.clr,
+                      font_size: 24.5,
+                      color: Colors.grey,
+                      height: btnHeight,
+                      onClick: () {
+                        buttonTap(Btn.clr);
+                      },
+                    ),
+                    CustomCircleButton(
+                      icon_size: 29,
+                      color: Colors.grey,
+                      height: btnHeight,
+                      icondata: Icons.backspace_outlined,
+                      onClick: () {
+                        buttonTap(Btn.del);
+                      },
+                    ),
+                    CustomCircleButton(
+                      title: Btn.negpos,
+                      font_size: 28,
+                      color: Colors.grey,
+                      height: btnHeight,
+                      onClick: () {
+                        buttonTap(Btn.negpos);
+                      },
+                    ),
+                    CustomCircleButton(
+                      title: "÷",
+                      font_size: 30,
+                      color: Colors.amber,
+                      height: btnHeight,
+                      splashColor: Colors.amberAccent,
+                      onClick: () {
+                        buttonTap(Btn.divide);
+                      },
+                    ),
+                  ], // children
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // 2nd Container
+                  children: [
+                    CustomCircleButton(
+                      title: Btn.n7,
+                      font_size: 28,
+                      color: Colors.white38,
+                      height: btnHeight,
+                      onClick: () {
+                        buttonTap(Btn.n7);
+                      },
+                    ),
+                    CustomCircleButton(
+                      title: Btn.n8,
+                      font_size: 28,
+                      color: Colors.white38,
+                      height: btnHeight,
+                      onClick: () {
+                        buttonTap(Btn.n8);
+                      },
+                    ),
+                    CustomCircleButton(
+                      title: Btn.n9,
+                      font_size: 28,
+                      color: Colors.white38,
+                      height: btnHeight,
+                      onClick: () {
+                        buttonTap(Btn.n9);
+                      },
+                    ),
+                    CustomCircleButton(
+                      title: "×",
+                      font_size: 28,
+                      color: Colors.amber,
+                      height: btnHeight,
+                      splashColor: Colors.amberAccent,
+                      onClick: () {
+                        buttonTap(Btn.multiply);
+                      },
+                    ),
+                  ], // children
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // !st Container
+                  children: [
+                    CustomCircleButton(
+                      title: Btn.n4,
+                      font_size: 28,
+                      color: Colors.white38,
+                      height: btnHeight,
+                      onClick: () {
+                        buttonTap(Btn.n4);
+                      },
+                    ),
+                    CustomCircleButton(
+                      title: Btn.n5,
+                      font_size: 28,
+                      color: Colors.white38,
+                      height: btnHeight,
+                      onClick: () {
+                        buttonTap(Btn.n5);
+                      },
+                    ),
+                    CustomCircleButton(
+                      title: Btn.n6,
+                      font_size: 28,
+                      color: Colors.white38,
+                      height: btnHeight,
+                      onClick: () {
+                        buttonTap(Btn.n6);
+                      },
+                    ),
+                    CustomCircleButton(
+                      title: Btn.subtract,
+                      font_size: 28,
+                      color: Colors.amber,
+                      height: btnHeight,
+                      splashColor: Colors.amberAccent,
+                      onClick: () {
+                        buttonTap(Btn.subtract);
+                      },
+                    ),
+                  ], // children
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // !st Container
+                  children: [
+                    CustomCircleButton(
+                      title: Btn.n1,
+                      font_size: 28,
+                      color: Colors.white38,
+                      height: btnHeight,
+                      onClick: () {
+                        buttonTap(Btn.n1);
+                      },
+                    ),
+                    CustomCircleButton(
+                      title: Btn.n2,
+                      font_size: 28,
+                      color: Colors.white38,
+                      height: btnHeight,
+                      onClick: () {
+                        buttonTap(Btn.n2);
+                      },
+                    ),
+                    CustomCircleButton(
+                      title: Btn.n3,
+                      font_size: 28,
+                      color: Colors.white38,
+                      height: btnHeight,
+                      onClick: () {
+                        buttonTap(Btn.n3);
+                      },
+                    ),
+                    CustomCircleButton(
+                      title: Btn.add,
+                      font_size: 28,
+                      color: Colors.amber,
+                      height: btnHeight,
+                      splashColor: Colors.amberAccent,
+                      onClick: () {
+                        buttonTap(Btn.add);
+                      },
+                    ),
+                  ], // children
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // !st Container
+                  children: [
+                    CustomCircleButton(
+                      title: Btn.per,
+                      font_size: 28,
+                      color: Colors.white38,
+                      height: btnHeight,
+                      onClick: () {
+                        buttonTap(Btn.per);
+                      },
+                    ),
+                    CustomCircleButton(
+                      title: Btn.n0,
+                      font_size: 28,
+                      color: Colors.white38,
+                      height: btnHeight,
+                      onClick: () {
+                        buttonTap(Btn.n0);
+                      },
+                    ),
+                    CustomCircleButton(
+                      title: Btn.dot,
+                      font_size: 28,
+                      color: Colors.white38,
+                      height: btnHeight,
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            // !st COntainer
-            children: [
-              CustomCircleButton(
-                title: Btn.clr,
-                font_size: 24.5,
-                color: Colors.grey,
-                onClick: () {
-                  buttonTap(Btn.clr);
-                },
-              ),
-              CustomCircleButton(
-                icon_size: 29,
-                color: Colors.grey,
-                icondata: Icons.backspace_outlined,
-                onClick: () {
-                  buttonTap(Btn.del);
-                },
-              ),
-              CustomCircleButton(
-                title: Btn.negpos,
-                font_size: 28,
-                color: Colors.grey,
-                onClick: () {
-                  buttonTap(Btn.negpos);
-                },
-              ),
-              CustomCircleButton(
-                title: "÷",
-                font_size: 30,
-                color: Colors.amber,
-                splashColor: Colors.amberAccent,
-                onClick: () {
-                  buttonTap(Btn.divide);
-                },
-              ),
-            ], // children
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            // !st COntainer
-            children: [
-              CustomCircleButton(
-                title: Btn.n7,
-                font_size: 28,
-                color: Colors.white38,
-                onClick: () {
-                  buttonTap(Btn.n7);
-                },
-              ),
-              CustomCircleButton(
-                title: Btn.n8,
-                font_size: 28,
-                color: Colors.white38,
-                onClick: () {
-                  buttonTap(Btn.n8);
-                },
-              ),
-              CustomCircleButton(
-                title: Btn.n9,
-                font_size: 28,
-                color: Colors.white38,
-                onClick: () {
-                  buttonTap(Btn.n9);
-                },
-              ),
-              CustomCircleButton(
-                title: "×",
-                font_size: 28,
-                color: Colors.amber,
-                splashColor: Colors.amberAccent,
-                onClick: () {
-                  buttonTap(Btn.multiply);
-                },
-              ),
-            ], // children
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            // !st COntainer
-            children: [
-              CustomCircleButton(
-                title: Btn.n4,
-                font_size: 28,
-                color: Colors.white38,
-                onClick: () {
-                  buttonTap(Btn.n4);
-                },
-              ),
-              CustomCircleButton(
-                title: Btn.n5,
-                font_size: 28,
-                color: Colors.white38,
-                onClick: () {
-                  buttonTap(Btn.n5);
-                },
-              ),
-              CustomCircleButton(
-                title: Btn.n6,
-                font_size: 28,
-                color: Colors.white38,
-                onClick: () {
-                  buttonTap(Btn.n6);
-                },
-              ),
-              CustomCircleButton(
-                title: Btn.subtract,
-                font_size: 28,
-                color: Colors.amber,
-                splashColor: Colors.amberAccent,
-                onClick: () {
-                  buttonTap(Btn.subtract);
-                },
-              ),
-            ], // children
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            // !st COntainer
-            children: [
-              CustomCircleButton(
-                title: Btn.n1,
-                font_size: 28,
-                color: Colors.white38,
-                onClick: () {
-                  buttonTap(Btn.n1);
-                },
-              ),
-              CustomCircleButton(
-                title: Btn.n2,
-                font_size: 28,
-                color: Colors.white38,
-                onClick: () {
-                  buttonTap(Btn.n2);
-                },
-              ),
-              CustomCircleButton(
-                title: Btn.n3,
-                font_size: 28,
-                color: Colors.white38,
-                onClick: () {
-                  buttonTap(Btn.n3);
-                },
-              ),
-              CustomCircleButton(
-                title: Btn.add,
-                font_size: 28,
-                color: Colors.amber,
-                splashColor: Colors.amberAccent,
-                onClick: () {
-                  buttonTap(Btn.add);
-                },
-              ),
-            ], // children
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            // !st COntainer
-            children: [
-              // CustomCircleButton(title: "%", font_size: 28, color: Colors.white38,),
-              CustomCircleButton(
-                title: Btn.n0,
-                font_size: 28,
-                color: Colors.white38,
-                flex: 2,
-                shape: 60,
-                onClick: () {
-                  buttonTap(Btn.n0);
-                },
-              ),
-              CustomCircleButton(
-                title: Btn.dot,
-                font_size: 28,
-                color: Colors.white38,
-
-                onClick: () {
-                  buttonTap(Btn.dot);
-                },
-              ),
-              CustomCircleButton(
-                title: Btn.calculate,
-                font_size: 28,
-                color: Colors.amber,
-                splashColor: Colors.amberAccent,
-                onClick: () {
-                  buttonTap(Btn.calculate);
-                },
-              ),
-            ], // children
+                      onClick: () {
+                        buttonTap(Btn.dot);
+                      },
+                    ),
+                    CustomCircleButton(
+                      title: Btn.calculate,
+                      font_size: 28,
+                      color: Colors.amber,
+                      height: btnHeight,
+                      splashColor: Colors.amberAccent,
+                      onClick: () {
+                        buttonTap(Btn.calculate);
+                      },
+                    ),
+                  ], // children
+                ),
+              ],
+            ),
           ),
         ], //children
       ),
@@ -335,8 +373,10 @@ class _calculatorScreenState extends State<calculatorScreen> {
       delete();
       return;
     } else if (value == Btn.negpos) {
-      print("negpos");
       negpos();
+      return;
+    } else if (value == Btn.per) {
+      percentage();
       return;
     } else if (value == Btn.calculate) {
       calculate();
@@ -454,7 +494,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
       );
     }
     if (RegExp(r"[-+*/]").hasMatch(_displayController.text)) {
-      _displayController.text = "-(" + _displayController.text + ")";
+      _displayController.text = "-(${_displayController.text})";
     } else {
       if (_displayController.text.startsWith(Btn.subtract)) {
         _displayController.text = _displayController.text.substring(1);
@@ -462,6 +502,18 @@ class _calculatorScreenState extends State<calculatorScreen> {
         _displayController.text = Btn.subtract + _displayController.text;
       }
     }
+    setState(() {
+      update_resultController();
+    });
+  }
+
+  void percentage() {
+    if (_displayController.text == "") return;
+    _displayController.text = "(${_displayController.text})%";
+
+    double num = _displayController.text.interpret().toDouble() / 100;
+    _resultController.text = num.toString();
+
     setState(() {
       update_resultController();
     });
@@ -485,8 +537,6 @@ class _calculatorScreenState extends State<calculatorScreen> {
     ) {
       if (_displayController.text[i] == Btn.dot) {
         rightcheck = true;
-        print("i: $i");
-        print("right: $rightcheck");
         break;
       }
     }
@@ -494,7 +544,8 @@ class _calculatorScreenState extends State<calculatorScreen> {
     //Left check
     bool leftcheck = false;
     for (
-      j;   j >= 0 &&
+      j;
+      j >= 0 &&
           (_displayController.text[j] != Btn.add &&
               _displayController.text[j] != Btn.subtract &&
               _displayController.text[j] != Btn.multiply &&
@@ -503,8 +554,6 @@ class _calculatorScreenState extends State<calculatorScreen> {
     ) {
       if (_displayController.text[j] == Btn.dot) {
         leftcheck = true;
-        print("letter: $j");
-        print("left check: $leftcheck");
         break;
       }
     }
@@ -528,7 +577,6 @@ class _calculatorScreenState extends State<calculatorScreen> {
       _resultController.text = removeTrailingZeros(
         _displayController.text.interpret().toDouble(),
       );
-
       if (_resultController.text.endsWith(".0")) {
         _resultController.text = _resultController.text.substring(
           0,
