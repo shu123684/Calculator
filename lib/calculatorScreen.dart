@@ -12,9 +12,6 @@ class calculatorScreen extends StatefulWidget {
 }
 
 class _calculatorScreenState extends State<calculatorScreen> {
-
-
-
   // ignore: prefer_final_fields
   TextEditingController _displayController = TextEditingController();
   TextEditingController _resultController = TextEditingController();
@@ -57,8 +54,8 @@ class _calculatorScreenState extends State<calculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final btnSpace = MediaQuery.of(context).size.height*.54;
-    final btnHeight = (btnSpace-45)/5;
+    final btnSpace = MediaQuery.of(context).size.height * .54;
+    final btnHeight = (btnSpace - 45) / 5;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -551,21 +548,28 @@ class _calculatorScreenState extends State<calculatorScreen> {
 
   void update_resultController() {
     if (_displayController.text.isNotEmpty) {
-      _resultController.text = removeTrailingZeros(
-        _displayController.text.interpret().toDouble(),
-      );
+
+      // Interpret the value of the _displayController into _resultController
+      _resultController.text = _displayController.text.interpret().toString();
+
+      if (_resultController.text.contains(Btn.dot)) {
+        if ((_resultController.text.length -
+                _resultController.text.indexOf(Btn.dot)) >
+            7) {
+          _resultController.text = _resultController.text.substring(
+            0,
+            _resultController.text.indexOf(Btn.dot) + 7,
+          );
+        }
+      }
+
+      // Remove trailing zeros in _resultController
+      _resultController.text = removeTrailingZeros(double.parse(_resultController.text));
+
       if (_resultController.text.endsWith(".0")) {
         _resultController.text = _resultController.text.substring(
           0,
           _resultController.text.indexOf(Btn.dot),
-        );
-      }
-      if ((_resultController.text.length -
-              _resultController.text.indexOf(Btn.dot)) >
-          7) {
-        _resultController.text = _resultController.text.substring(
-          0,
-          _resultController.text.indexOf(Btn.dot) + 7,
         );
       }
     } else {
