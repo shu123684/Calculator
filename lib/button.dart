@@ -33,7 +33,7 @@ class CustomCircleButton extends StatelessWidget {
     return Expanded(
       flex: flex ?? 1,
       child: Container(
-        margin: EdgeInsets.fromLTRB(2, 2, 1, 7),
+        padding: EdgeInsets.fromLTRB(7, 2, 7, 5),
 
         decoration: BoxDecoration(
           shape: shape == null ? BoxShape.circle: BoxShape.rectangle,
@@ -46,10 +46,8 @@ class CustomCircleButton extends StatelessWidget {
               onClick.call();
             },
 
-            shape: shape == null
-                ? CircleBorder()
-                : RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(shape ?? 10),
+            shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(shape ?? 50),
                   ),
             backgroundColor: color,
             splashColor: splashColor ??Colors.grey[400],
