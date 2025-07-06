@@ -4,6 +4,7 @@ import 'package:function_tree/function_tree.dart';
 
 import 'package:calculator/button.dart';
 import 'package:calculator/btn.dart';
+import 'package:calculator/my_function.dart';
 
 class calculatorScreen extends StatefulWidget {
   const calculatorScreen({super.key});
@@ -452,63 +453,82 @@ class _calculatorScreenState extends State<calculatorScreen> {
   }
 
   void setValue(String value) {
-    // Experiment
     var cursorPos = _displayController.selection.baseOffset;
     String prefixText = _displayController.text.substring(0, cursorPos);
     String suffixText = _displayController.text.substring(cursorPos);
 
-    // Option 2 (using RegExp)
-    if (((cursorPos == _displayController.text.indexOf(Btn.subtract) ||
-                cursorPos == _displayController.text.indexOf(Btn.add) ||
-                cursorPos == _displayController.text.indexOf(Btn.divide) ||
-                cursorPos == _displayController.text.indexOf(Btn.multiply) ||
-                cursorPos == _displayController.text.indexOf(Btn.dot)) ||
-            ((cursorPos == _displayController.text.indexOf(Btn.subtract) + 1 ||
-                cursorPos == _displayController.text.indexOf(Btn.add) + 1 ||
-                cursorPos == _displayController.text.indexOf(Btn.divide) + 1 ||
-                cursorPos ==
-                    _displayController.text.indexOf(Btn.multiply) + 1 ||
-                cursorPos == _displayController.text.indexOf(Btn.dot) + 1))) &&
-        (RegExp(r"[-+×÷.]").hasMatch(value))) {
-      value = "";
+    // Check for Consecutive Operators
+    if (RegExp(r"[-+÷×]").hasMatch(value)) {
+      // Checking if the cursor pos is last or first position
+      // otherwise we are expecting range error in ".text[cursorPos]"
+      int offset = 0;
+      bool lastorfirstpos = false;
+      if (cursorPos == _displayController.text.length) {
+        offset = 1;
+        lastorfirstpos = true;
+      } else if (cursorPos == 0) {
+        offset = 0;
+        lastorfirstpos = true;
+      }
+      // Only for operands [/*-+]
+      if (lastorfirstpos) {
+        // last or first position
+        if (RegExp(
+          r"[-+÷×]",
+        ).hasMatch(_displayController.text[cursorPos - offset])) {
+          value = "";
+        }
+      } else {
+        // Inside the text
+        if (RegExp(
+              r"[-+÷×]",
+            ).hasMatch(_displayController.text[cursorPos - 1]) ||
+            RegExp(r"[-+÷×]").hasMatch(_displayController.text[cursorPos])) {
+          value = "";
+        }
+      }
     }
 
+    // Checking if dot(.) can be added
     if (value == Btn.dot) {
-      if (dotCheck()) {
+      if (dotCheck(_displayController.text, cursorPos)) {
         value = "";
-      } else if (_displayController.text.isEmpty) {
+      } else if (_displayController.text == "") {
         value = "0.";
       }
     }
 
+    // If Rnd[], then no value should be added in btwn it
+    // like: Rn.d[1+2] (Error)
     if (_displayController.text.contains("Rnd[")) {
       int offset = 0;
       if (cursorPos == _displayController.text.length) offset++;
-      if (_displayController.text[cursorPos - 1] == "R" ||
-          _displayController.text[cursorPos - 1] == "n" ||
-          _displayController.text[cursorPos - 1] == "d" ||
+      if (
+          _displayController.text[cursorPos - offset] == "n" ||
+          _displayController.text[cursorPos - offset] == "d" ||
           _displayController.text[cursorPos - offset] == "[") {
         value = "";
       }
     }
-    if ((_displayController.text.contains(Btn.lbrack) ||
-            _displayController.text.contains(Btn.rbrack)) &&
+
+    // If a number is pressed after/before a bracket, multiplication is added automatically
+    if (RegExp(r"[()\]]").hasMatch(_displayController.text) &&
         RegExp(r"\d").hasMatch(value)) {
-      if (cursorPos == _displayController.text.indexOf(Btn.lbrack)) {
+      if (cursorPos == _displayController.text.indexOf(Btn.lbrack) ||
+          cursorPos == _displayController.text.indexOf("R")
+      ) {
         value = "$value${Btn.multiply}";
-      }
-      if ((cursorPos == _displayController.text.indexOf(Btn.rbrack) + 1) ||
-          (cursorPos == _displayController.text.indexOf("]") + 1)) {
+      } else if ((cursorPos == _displayController.text.indexOf(Btn.rbrack) + 1) ||
+          (cursorPos == _displayController.text.indexOf("]")+1)) {
         value = "${Btn.multiply}$value";
       }
     }
 
-    if (value != "") {
-      _displayController.text = prefixText + value + suffixText;
-      _displayController.selection = TextSelection.fromPosition(
-        TextPosition(offset: cursorPos + value.length),
-      );
-    }
+    // Adds the value to the text & shifts the cursor afer the entry of value
+    _displayController.text = prefixText + value + suffixText;
+    _displayController.selection = TextSelection.fromPosition(
+      TextPosition(offset: cursorPos + value.length),
+    );
 
     setState(() {});
   }
@@ -520,7 +540,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
 
     int offsetDel = 1; // Offset for delete operation
     int offset = 0; // offet for round operation "["
-    if(cursorPos == _displayController.text.length) offset++;
+    if (cursorPos == _displayController.text.length) offset++;
     if (_displayController.text[cursorPos - 1] == "R" ||
         _displayController.text[cursorPos - 1] == "n" ||
         _displayController.text[cursorPos - 1] == "d" ||
@@ -532,8 +552,10 @@ class _calculatorScreenState extends State<calculatorScreen> {
       return;
     }
 
+    // Remove the last character and shifts cursor it to the left
     _displayController.text =
-        prefixText.substring(0, cursorPos - offsetDel) + suffixText; // OffsetDel
+        prefixText.substring(0, cursorPos - offsetDel) +
+        suffixText; // OffsetDel
 
     _displayController.selection = TextSelection.fromPosition(
       TextPosition(offset: cursorPos - offsetDel), // OffsetDel
@@ -552,8 +574,12 @@ class _calculatorScreenState extends State<calculatorScreen> {
   }
 
   void negpos() {
-    if (_displayController.text == "") return;
+    if (_displayController.text == "") {
+      displayError("Input Number");
+      return;
+    }
 
+    // like: (-123) --> 123
     if (_displayController.text.startsWith("(-") &&
         _displayController.text.endsWith(")")) {
       _displayController.text = _displayController.text.substring(
@@ -561,6 +587,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
         _displayController.text.length - 1,
       );
     }
+    // like: 123+5 --> -(123 + 5)
     if (RegExp(r"[-+*/]").hasMatch(_displayController.text)) {
       _displayController.text = "-(${_displayController.text})";
     } else {
@@ -576,8 +603,14 @@ class _calculatorScreenState extends State<calculatorScreen> {
   }
 
   void round() {
-    if (_resultController.text.isEmpty) return;
-    if (_displayController.text.contains("Rnd[")) return;
+    if (_resultController.text.isEmpty) {
+      displayError("Empty!");
+      return;
+    };
+    if (_displayController.text.contains("Rnd[")) {
+      displayError("Round can be used only once!");
+      return;
+    };
 
     // Experiment
     _displayController.text = "Rnd[${_displayController.text}]";
@@ -638,62 +671,11 @@ class _calculatorScreenState extends State<calculatorScreen> {
         });
   }
 
-  bool dotCheck() {
-    if (!_displayController.text.contains(Btn.dot)) return false;
-    int i = _displayController.selection.baseOffset - 1;
-    int j = _displayController.selection.baseOffset - 1;
-
-    // right check
-    bool rightcheck = false;
-    for (
-      i;
-      i < _displayController.text.length &&
-          (_displayController.text[i] != Btn.add &&
-              _displayController.text[i] != Btn.subtract &&
-              _displayController.text[i] != Btn.multiply &&
-              _displayController.text[i] != Btn.divide);
-      i++
-    ) {
-      if (_displayController.text[i] == Btn.dot) {
-        rightcheck = true;
-        break;
-      }
-    }
-
-    //Left check
-    bool leftcheck = false;
-    for (
-      j;
-      j >= 0 &&
-          (_displayController.text[j] != Btn.add &&
-              _displayController.text[j] != Btn.subtract &&
-              _displayController.text[j] != Btn.multiply &&
-              _displayController.text[j] != Btn.divide);
-      j--
-    ) {
-      if (_displayController.text[j] == Btn.dot) {
-        leftcheck = true;
-        break;
-      }
-    }
-    if (leftcheck || rightcheck) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  String removeTrailingZeros(double n) {
-    return double.parse(
-      n.toStringAsFixed(
-        n.truncateToDouble() == n ? 0 : n.toString().split('.')[1].length,
-      ),
-    ).toString();
-  }
-
   void update_resultController() {
     try {
       if (_displayController.text.isNotEmpty) {
+        // ctext is variable that is used to store the value of _displayController
+        // SO that we directly do not damage the _displayController.text
         String ctext = _displayController.text;
         if (ctext.contains("Rnd[") && ctext.contains("]")) {
           String num1 = ctext.substring(
@@ -705,10 +687,9 @@ class _calculatorScreenState extends State<calculatorScreen> {
           ); // Num stores the proper num1 with '*' OR '/'
           int rnd = num.interpret().round(); // interpret and round num
           ctext = ctext.replaceAll(
-            "Rnd[$num1",
-            "$rnd",
+            "Rnd[$num1]", "$rnd",
           ); // Replaces the old num1 string with new rounded integer
-          ctext = ctext.replaceAll("]", "");
+          // ctext = ctext.replaceAll("]", "");
         }
         ctext = conversion(ctext);
 
@@ -757,11 +738,5 @@ class _calculatorScreenState extends State<calculatorScreen> {
     } catch (e) {
       print("Error in update_resultController: $e");
     }
-  }
-
-  String conversion(String text) {
-    text = text.replaceAll("×", "*");
-    text = text.replaceAll("÷", "/");
-    return text;
   }
 }
