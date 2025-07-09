@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ThemeManager with ChangeNotifier{
-
+class ThemeManager with ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.light;
 
   get themeMode => _themeMode;
@@ -18,7 +17,7 @@ class ThemeManager with ChangeNotifier{
   //     print("Not notifying");
   //   }
   // }
-  toggleTheme( bool isDark){
+  toggleTheme(bool isDark) {
     print("ThemeManager themeMode: $themeMode. current mode: $_themeMode");
     _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
     print("ThemeManager themeMode: $themeMode. current mode: $_themeMode");

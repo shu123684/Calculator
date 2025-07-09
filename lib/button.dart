@@ -37,15 +37,14 @@ class CustomCircleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    String displaytitle = (showtitle? title1: title2) ?? title1 ?? "";
+    String displaytitle = (showtitle ? title1 : title2) ?? title1 ?? "";
     return Expanded(
       flex: flex ?? 1,
       child: Container(
         padding: EdgeInsets.fromLTRB(7, 2, 7, 5),
 
         decoration: BoxDecoration(
-          shape: shape == null ? BoxShape.circle: BoxShape.rectangle,
+          shape: shape == null ? BoxShape.circle : BoxShape.rectangle,
         ),
 
         child: SizedBox(
@@ -56,10 +55,10 @@ class CustomCircleButton extends StatelessWidget {
             },
 
             shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(shape ?? 50),
-                  ),
+              borderRadius: BorderRadius.circular(shape ?? 50),
+            ),
             backgroundColor: color,
-            splashColor: splashColor ??Colors.grey[400],
+            splashColor: splashColor ?? Colors.grey[400],
             elevation: 10,
             child: icondata == null
                 ? Center(
@@ -75,13 +74,15 @@ class CustomCircleButton extends StatelessWidget {
                 : Center(
                     // If icon data exists, show Icon
                     child: IconButton(
-                      onPressed: (){
+                      onPressed: () {
                         onClick.call();
                       },
                       icon: Icon(
                         icondata,
                         size: icon_size ?? 25, // icondata is not null here
-                        color: Theme.of(context).primaryColor, // Style your icon
+                        color: Theme.of(
+                          context,
+                        ).primaryColor, // Style your icon
                       ),
                     ),
                   ),
@@ -93,8 +94,4 @@ class CustomCircleButton extends StatelessWidget {
   }
 }
 
-enum ButtonCategory{
-  primary,
-  secondary,
-  special,
-}
+enum ButtonCategory { primary, secondary, special }

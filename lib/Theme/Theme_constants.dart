@@ -11,7 +11,7 @@ ThemeData lightTheme = ThemeData(
       fontSize: 40,
       fontWeight: FontWeight.bold,
       color: Colors.black38,
-    )
+    ),
   ),
 
   extensions: <ThemeExtension<dynamic>>[
@@ -33,12 +33,12 @@ ThemeData darkTheme = ThemeData(
   scaffoldBackgroundColor: Colors.black,
   primaryColor: Colors.white,
   textTheme: TextTheme(
-      headlineLarge: TextStyle(color: Colors.black, fontSize: 50),
-      headlineMedium: TextStyle(
-        fontSize: 40,
-        fontWeight: FontWeight.bold,
-        color: Colors.white38,
-      )
+    headlineLarge: TextStyle(color: Colors.black, fontSize: 50),
+    headlineMedium: TextStyle(
+      fontSize: 40,
+      fontWeight: FontWeight.bold,
+      color: Colors.white38,
+    ),
   ),
 
   extensions: <ThemeExtension<dynamic>>[

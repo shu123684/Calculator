@@ -1,4 +1,5 @@
 import 'package:calculator/btn.dart';
+
 // Tried But Failed due to "SetState"
 // Completely Independent
 String conversion(String text) {
@@ -6,6 +7,7 @@ String conversion(String text) {
   text = text.replaceAll("÷", "/");
   return text;
 }
+
 String removeTrailingZeros(double n) {
   return double.parse(
     n.toStringAsFixed(
@@ -14,26 +16,25 @@ String removeTrailingZeros(double n) {
   ).toString();
 }
 
-// Subtly Dependent 
-// 1. 
+// Subtly Dependent
+// 1.
 bool dotCheck(String text, int cursorPos) {
   if (!text.contains(Btn.dot)) return false;
   int offset = 1;
-  if(cursorPos == 0) offset = 0;
-  int j = cursorPos-offset;
-  int i = cursorPos-offset;
+  if (cursorPos == 0) offset = 0;
+  int j = cursorPos - offset;
+  int i = cursorPos - offset;
 
   // right check
   bool rightcheck = false;
   for (
-  i;
-  i < text.length &&
-      (text[i] != Btn.add &&
-          text[i] != Btn.subtract &&
-          text[i] != Btn.multiply &&
-          text[i] != Btn.divide
-      );
-  i++
+    i;
+    i < text.length &&
+        (text[i] != Btn.add &&
+            text[i] != Btn.subtract &&
+            text[i] != Btn.multiply &&
+            text[i] != Btn.divide);
+    i++
   ) {
     if (text[i] == Btn.dot) {
       rightcheck = true;
@@ -44,13 +45,13 @@ bool dotCheck(String text, int cursorPos) {
   //Left check
   bool leftcheck = false;
   for (
-  j;
-  j >= 0 &&
-      (text[j] != Btn.add &&
-          text[j] != Btn.subtract &&
-          text[j] != Btn.multiply &&
-          text[j] != Btn.divide);
-  j--
+    j;
+    j >= 0 &&
+        (text[j] != Btn.add &&
+            text[j] != Btn.subtract &&
+            text[j] != Btn.multiply &&
+            text[j] != Btn.divide);
+    j--
   ) {
     if (text[j] == Btn.dot) {
       leftcheck = true;
