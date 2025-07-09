@@ -3,8 +3,11 @@ class Btn {
   static const String clr = "AC";
   static const String per = "%";
   static const String rnd = "Rnd";
+  static const String snd = "2nd";
   static const String lbrack = "(";
   static const String rbrack = ")";
+  static const String rsqbrack = "]";
+  static const String lsqbrack = "[";
   static const String factorial = "!";
   static const String negpos = "-/+";
   static const String divide = "÷";

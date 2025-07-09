@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 import 'package:function_tree/function_tree.dart';
 
-import 'package:calculator/button.dart';
+// import 'package:calculator/button.dart';
+import 'package:calculator/CustomCircleButton.dart';
 import 'package:calculator/btn.dart';
 import 'package:calculator/my_function.dart';
 
@@ -14,6 +15,9 @@ class calculatorScreen extends StatefulWidget {
 }
 
 class _calculatorScreenState extends State<calculatorScreen> {
+  // 2nd button
+  bool istitle1 = true; // For  the the changging btw "(" to "["
+
   // Error text
   String errorText = "";
   bool _showStaticError = false;
@@ -109,7 +113,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
                 textAlign: TextAlign.end,
                 controller: _displayController,
                 scrollController: _mainDisplayScrollController,
-                style: TextStyle(color: Colors.white, fontSize: 50),
+                style: Theme.of(context).textTheme.headlineLarge,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: Btn.n0,
@@ -138,11 +142,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
                 enableInteractiveSelection: false,
                 textAlign: TextAlign.end,
                 controller: _resultController,
-                style: TextStyle(
-                  color: Colors.white38,
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.headlineMedium,
                 decoration: InputDecoration(border: InputBorder.none),
               ),
             ),
@@ -161,41 +161,50 @@ class _calculatorScreenState extends State<calculatorScreen> {
                   // 1st Container
                   children: [
                     CustomCircleButton(
-                      title: Btn.rnd,
+                      title1: Btn.rnd,
                       font_size: 25,
-                      color: Colors.grey,
                       height: btnHeight,
+                      category: ButtonCategory.secondary,
+                      onClick: () => buttonTap(Btn.rnd),
+                    ),
+                    CustomCircleButton(
+                      title1: Btn.lbrack,
+                      title2: Btn.lsqbrack,
+                      showtitle: istitle1,
+                      font_size: 24.6,
+                      height: btnHeight,
+                      category: ButtonCategory.secondary,
                       onClick: () {
-                        buttonTap(Btn.rnd);
+                        if (istitle1) {
+                          buttonTap(Btn.lbrack);
+                        } else {
+                          buttonTap(Btn.lsqbrack);
+                        }
                       },
                     ),
                     CustomCircleButton(
-                      title: Btn.lbrack,
+                      title1: Btn.rbrack,
+                      title2: Btn.rsqbrack,
+                      showtitle: istitle1,
                       font_size: 28,
-                      color: Colors.grey,
                       height: btnHeight,
+                      category: ButtonCategory.secondary,
                       onClick: () {
-                        buttonTap(Btn.lbrack);
+                        if (istitle1) {
+                          buttonTap(Btn.rbrack);
+                        } else {
+                          buttonTap(Btn.rsqbrack);
+                        }
                       },
                     ),
                     CustomCircleButton(
-                      title: Btn.rbrack,
-                      font_size: 28,
-                      color: Colors.grey,
+                      title1: Btn.snd,
+                      font_size: 24.6,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.rbrack);
-                      },
-                    ),
-                    CustomCircleButton(
-                      title: Btn.factorial,
-                      font_size: 30,
-                      color: Colors.amber,
-                      height: btnHeight,
-                      splashColor: Colors.amberAccent,
-                      onClick: () {
-                        buttonTap(Btn.factorial);
-                      },
+                      category: ButtonCategory.special,
+                      onClick: () => setState(() {
+                        istitle1 = !istitle1;
+                      }),
                     ),
                   ], // children
                 ),
@@ -204,41 +213,32 @@ class _calculatorScreenState extends State<calculatorScreen> {
                   // 1st Container
                   children: [
                     CustomCircleButton(
-                      title: Btn.clr,
+                      title1: Btn.clr,
                       font_size: 24.5,
-                      color: Colors.grey,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.clr);
-                      },
+                      category: ButtonCategory.secondary,
+                      onClick: () => buttonTap(Btn.clr),
                     ),
                     CustomCircleButton(
                       icon_size: 29,
-                      color: Colors.grey,
                       height: btnHeight,
+                      category: ButtonCategory.secondary,
                       icondata: Icons.backspace_outlined,
-                      onClick: () {
-                        buttonTap(Btn.del);
-                      },
+                      onClick: () => buttonTap(Btn.del),
                     ),
                     CustomCircleButton(
-                      title: Btn.negpos,
+                      title1: Btn.negpos,
                       font_size: 28,
-                      color: Colors.grey,
+                      category: ButtonCategory.secondary,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.negpos);
-                      },
+                      onClick: () => buttonTap(Btn.negpos),
                     ),
                     CustomCircleButton(
-                      title: Btn.divide,
+                      title1: Btn.divide,
                       font_size: 30,
-                      color: Colors.amber,
                       height: btnHeight,
-                      splashColor: Colors.amberAccent,
-                      onClick: () {
-                        buttonTap(Btn.divide);
-                      },
+                      category: ButtonCategory.special,
+                      onClick: () => buttonTap(Btn.divide),
                     ),
                   ], // children
                 ),
@@ -247,41 +247,32 @@ class _calculatorScreenState extends State<calculatorScreen> {
                   // 2nd Container
                   children: [
                     CustomCircleButton(
-                      title: Btn.n7,
+                      title1: Btn.n7,
                       font_size: 28,
-                      color: Colors.white38,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.n7);
-                      },
+                      category: ButtonCategory.primary,
+                      onClick: () => buttonTap(Btn.n7),
                     ),
                     CustomCircleButton(
-                      title: Btn.n8,
+                      title1: Btn.n8,
                       font_size: 28,
-                      color: Colors.white38,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.n8);
-                      },
+                      category: ButtonCategory.primary,
+                      onClick: () => buttonTap(Btn.n8),
                     ),
                     CustomCircleButton(
-                      title: Btn.n9,
+                      title1: Btn.n9,
                       font_size: 28,
-                      color: Colors.white38,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.n9);
-                      },
+                      category: ButtonCategory.primary,
+                      onClick: () => buttonTap(Btn.n9),
                     ),
                     CustomCircleButton(
-                      title: Btn.multiply,
+                      title1: Btn.multiply,
                       font_size: 28,
-                      color: Colors.amber,
                       height: btnHeight,
-                      splashColor: Colors.amberAccent,
-                      onClick: () {
-                        buttonTap(Btn.multiply);
-                      },
+                      category: ButtonCategory.special,
+                      onClick: () => buttonTap(Btn.multiply),
                     ),
                   ], // children
                 ),
@@ -290,41 +281,32 @@ class _calculatorScreenState extends State<calculatorScreen> {
                   // !st Container
                   children: [
                     CustomCircleButton(
-                      title: Btn.n4,
+                      title1: Btn.n4,
                       font_size: 28,
-                      color: Colors.white38,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.n4);
-                      },
+                      category: ButtonCategory.primary,
+                      onClick: () => buttonTap(Btn.n4),
                     ),
                     CustomCircleButton(
-                      title: Btn.n5,
+                      title1: Btn.n5,
                       font_size: 28,
-                      color: Colors.white38,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.n5);
-                      },
+                      category: ButtonCategory.primary,
+                      onClick: () => buttonTap(Btn.n5),
                     ),
                     CustomCircleButton(
-                      title: Btn.n6,
+                      title1: Btn.n6,
                       font_size: 28,
-                      color: Colors.white38,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.n6);
-                      },
+                      category: ButtonCategory.primary,
+                      onClick: () => buttonTap(Btn.n6),
                     ),
                     CustomCircleButton(
-                      title: Btn.subtract,
+                      title1: Btn.subtract,
                       font_size: 28,
-                      color: Colors.amber,
                       height: btnHeight,
-                      splashColor: Colors.amberAccent,
-                      onClick: () {
-                        buttonTap(Btn.subtract);
-                      },
+                      category: ButtonCategory.special,
+                      onClick: () => buttonTap(Btn.subtract),
                     ),
                   ], // children
                 ),
@@ -333,38 +315,31 @@ class _calculatorScreenState extends State<calculatorScreen> {
                   // !st Container
                   children: [
                     CustomCircleButton(
-                      title: Btn.n1,
+                      title1: Btn.n1,
                       font_size: 28,
-                      color: Colors.white38,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.n1);
-                      },
+                      category: ButtonCategory.primary,
+                      onClick: () => buttonTap(Btn.n1),
                     ),
                     CustomCircleButton(
-                      title: Btn.n2,
+                      title1: Btn.n2,
                       font_size: 28,
-                      color: Colors.white38,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.n2);
-                      },
+                      category: ButtonCategory.primary,
+                      onClick: () => buttonTap(Btn.n2),
                     ),
                     CustomCircleButton(
-                      title: Btn.n3,
+                      title1: Btn.n3,
                       font_size: 28,
-                      color: Colors.white38,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.n3);
-                      },
+                      category: ButtonCategory.primary,
+                      onClick: () => buttonTap(Btn.n3),
                     ),
                     CustomCircleButton(
-                      title: Btn.add,
+                      title1: Btn.add,
                       font_size: 28,
-                      color: Colors.amber,
                       height: btnHeight,
-                      splashColor: Colors.amberAccent,
+                      category: ButtonCategory.special,
                       onClick: () {
                         buttonTap(Btn.add);
                       },
@@ -376,41 +351,32 @@ class _calculatorScreenState extends State<calculatorScreen> {
                   // !st Container
                   children: [
                     CustomCircleButton(
-                      title: Btn.per,
-                      font_size: 28,
-                      color: Colors.white38,
+                      title1: Btn.per,
+                      font_size: 30,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.per);
-                      },
+                      category: ButtonCategory.primary,
+                      onClick: () => buttonTap(Btn.per),
                     ),
                     CustomCircleButton(
-                      title: Btn.n0,
+                      title1: Btn.n0,
                       font_size: 28,
-                      color: Colors.white38,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.n0);
-                      },
+                      category: ButtonCategory.primary,
+                      onClick: () => buttonTap(Btn.n0),
                     ),
                     CustomCircleButton(
-                      title: Btn.dot,
+                      title1: Btn.dot,
                       font_size: 28,
-                      color: Colors.white38,
                       height: btnHeight,
-                      onClick: () {
-                        buttonTap(Btn.dot);
-                      },
+                      category: ButtonCategory.primary,
+                      onClick: () => buttonTap(Btn.dot),
                     ),
                     CustomCircleButton(
-                      title: Btn.calculate,
+                      title1: Btn.calculate,
                       font_size: 28,
-                      color: Colors.amber,
                       height: btnHeight,
-                      splashColor: Colors.amberAccent,
-                      onClick: () {
-                        buttonTap(Btn.calculate);
-                      },
+                      category: ButtonCategory.special,
+                      onClick: () => buttonTap(Btn.calculate),
                     ),
                   ], // children
                 ),
@@ -473,10 +439,12 @@ class _calculatorScreenState extends State<calculatorScreen> {
       // Only for operands [/*-+]
       if (lastorfirstpos) {
         // last or first position
-        if (RegExp(
-          r"[-+÷×]",
-        ).hasMatch(_displayController.text[cursorPos - offset])) {
-          value = "";
+        if (_displayController.text != "") {
+          if (RegExp(
+            r"[-+÷×]",
+          ).hasMatch(_displayController.text[cursorPos - offset])) {
+            value = "";
+          }
         }
       } else {
         // Inside the text
@@ -503,8 +471,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
     if (_displayController.text.contains("Rnd[")) {
       int offset = 0;
       if (cursorPos == _displayController.text.length) offset++;
-      if (
-          _displayController.text[cursorPos - offset] == "n" ||
+      if (_displayController.text[cursorPos - offset] == "n" ||
           _displayController.text[cursorPos - offset] == "d" ||
           _displayController.text[cursorPos - offset] == "[") {
         value = "";
@@ -515,11 +482,11 @@ class _calculatorScreenState extends State<calculatorScreen> {
     if (RegExp(r"[()\]]").hasMatch(_displayController.text) &&
         RegExp(r"\d").hasMatch(value)) {
       if (cursorPos == _displayController.text.indexOf(Btn.lbrack) ||
-          cursorPos == _displayController.text.indexOf("R")
-      ) {
+          cursorPos == _displayController.text.indexOf("R")) {
         value = "$value${Btn.multiply}";
-      } else if ((cursorPos == _displayController.text.indexOf(Btn.rbrack) + 1) ||
-          (cursorPos == _displayController.text.indexOf("]")+1)) {
+      } else if ((cursorPos ==
+              _displayController.text.indexOf(Btn.rbrack) + 1) ||
+          (cursorPos == _displayController.text.indexOf("]") + 1)) {
         value = "${Btn.multiply}$value";
       }
     }
@@ -606,11 +573,13 @@ class _calculatorScreenState extends State<calculatorScreen> {
     if (_resultController.text.isEmpty) {
       displayError("Empty!");
       return;
-    };
+    }
+    ;
     if (_displayController.text.contains("Rnd[")) {
       displayError("Round can be used only once!");
       return;
-    };
+    }
+    ;
 
     // Experiment
     _displayController.text = "Rnd[${_displayController.text}]";
@@ -687,7 +656,8 @@ class _calculatorScreenState extends State<calculatorScreen> {
           ); // Num stores the proper num1 with '*' OR '/'
           int rnd = num.interpret().round(); // interpret and round num
           ctext = ctext.replaceAll(
-            "Rnd[$num1]", "$rnd",
+            "Rnd[$num1]",
+            "$rnd",
           ); // Replaces the old num1 string with new rounded integer
           // ctext = ctext.replaceAll("]", "");
         }
