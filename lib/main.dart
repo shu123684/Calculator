@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:calculator/Screens/calculatorScreen.dart';
-// import 'package:calculator/Screens/settingsScreen.dart';
 import 'package:calculator/Theme/Theme_constants.dart';
 import 'package:flutter/services.dart';
 import 'package:calculator/Theme/ThemeManager.dart';
@@ -28,7 +27,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     _themeManager.removeListener(_themeListener);
-    print("MYAPP_DEBUG: dispose - Theme listener REMOVED.");
     super.dispose();
   }
 
@@ -38,30 +36,20 @@ class _MyAppState extends State<MyApp> {
     _themeManager.addListener(
       _themeListener,
     ); // MyApp listens to the global _themeManager
-    print("MYAPP_DEBUG: initState - Listener ADDED...");
   }
 
   void _themeListener() {
-    print(
-      "MYAPP_DEBUG: _themeListener CALLED! Mode: ${_themeManager.themeMode}",
-    );
     if (mounted) {
       setState(() {
-        print(
-          "MYAPP_DEBUG: 5. setState in _themeListener EXECUTED.",
-        ); // <<< VERY IMPORTANT
+        // <<< VERY IMPORTANT
       });
-      print("MYAPP_DEBUG: setState call COMPLETED in _themeListener.");
     } else {
-      print("MYAPP_DEBUG: _themeListener called but widget NOT MOUNTED.");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    print(
-      "MYAPP_DEBUG: 6. MyApp BUILD method. Using themeMode: ${_themeManager.themeMode} for MaterialApp. Instance: ${_themeManager.hashCode}",
-    ); // <<< VERY IMPORTANT
+    // <<< VERY IMPORTANT
     return MaterialApp(
       theme: lightTheme,
       darkTheme: darkTheme,
@@ -70,23 +58,20 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/calculatorScreen',
       routes: {
         '/calculatorScreen': (context) => calculatorScreen(),
-        '/settingsScreen': (context) => settingsScreen(),
+        '/settingsScreen': (context) => SettingsScreen(),
       },
     );
   }
 }
 
-class settingsScreen extends StatefulWidget {
+class SettingsScreen extends StatefulWidget {
   @override
-  State<settingsScreen> createState() => _settingsScreenState();
+  State<SettingsScreen> createState() => _settingsScreenState();
 }
 
-class _settingsScreenState extends State<settingsScreen> {
+class _settingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    print(
-      "MYAPP_BUILD: MyApp BUILD method. Using themeMode: ${_themeManager.themeMode} from _themeManager (Hash: ${_themeManager.hashCode})",
-    );
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -102,15 +87,15 @@ class _settingsScreenState extends State<settingsScreen> {
 
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4.0),
-          child: Container(color: Theme.of(context).primaryColor, height: 2.5),
+          child: Container(color: Theme.of(context).primaryColor.withOpacity(0.5), height: 2.5,),
         ),
         centerTitle: true,
       ),
       body: Column(
         children: [
           SwitchListTile(
-            title: Text("Dark Mode"),
-            value: _themeManager.themeMode == ThemeMode.dark,
+            title: Text("Light Mode"),
+            value: _themeManager.themeMode == ThemeMode.light,
             onChanged: (newValue) {
               _themeManager.toggleTheme(newValue);
             },
