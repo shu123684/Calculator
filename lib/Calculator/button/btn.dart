@@ -2,7 +2,6 @@ class Btn {
   static const String del = "del";
   static const String clr = "AC";
   static const String per = "%";
-  static const String rnd = "Rnd";
   static const String snd = "2nd";
   static const String lbrack = "(";
   static const String rbrack = ")";

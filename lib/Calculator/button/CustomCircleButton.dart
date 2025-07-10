@@ -57,7 +57,7 @@ class CustomCircleButton extends StatelessWidget {
         break;
     }
 
-    String displayTitle = (showtitle ? title2 : title1) ?? title1 ?? "";
+    String displayTitle = (showtitle ? title1 : title2) ?? title1 ?? "";
     return ElevatedButton(
       onPressed: onClick,
       style: ElevatedButton.styleFrom(

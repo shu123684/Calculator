@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 import 'package:function_tree/function_tree.dart';
-import 'package:calculator/CustomCircleButton.dart';
-import 'package:calculator/btn.dart';
-import 'package:calculator/my_function.dart';
+import 'package:calculator/Calculator/button/CustomCircleButton.dart';
+import 'package:calculator/Calculator/button/btn.dart';
+import 'package:calculator/Calculator/my_function.dart';
 
 class calculatorScreen extends StatefulWidget {
   const calculatorScreen({super.key});
@@ -13,6 +13,9 @@ class calculatorScreen extends StatefulWidget {
 }
 
 class _calculatorScreenState extends State<calculatorScreen> {
+
+  static const double primaryFontSize = 28.0;
+
   // 2nd button
   bool istitle1 = true; // For  the the changging btw "(" to "["
 
@@ -86,6 +89,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // ERROR DISPLAY
           AnimatedOpacity(
             opacity: _showStaticError ? 1.0 : 0.0,
             duration: Duration(milliseconds: 600),
@@ -94,6 +98,8 @@ class _calculatorScreenState extends State<calculatorScreen> {
               style: TextStyle(color: Colors.orange[400], fontSize: 12),
             ),
           ),
+
+          // ACTUAL DISPLAY
           SingleChildScrollView(
             reverse: true,
             // Display Controller Update
@@ -127,6 +133,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
             ),
           ),
 
+          // RESULT DISPLAY
           SingleChildScrollView(
             reverse: true,
             child: Container(
@@ -145,10 +152,13 @@ class _calculatorScreenState extends State<calculatorScreen> {
               ),
             ),
           ),
+
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 1),
             child: Divider(),
           ),
+
+          //CALCULATOR BUTTON
           SizedBox(
             height: btnSpace,
             child: Column(
@@ -159,11 +169,11 @@ class _calculatorScreenState extends State<calculatorScreen> {
                   // 1st Container
                   children: [
                     CustomCircleButton(
-                      title1: Btn.rnd,
+                      title1: Btn.factorial,
                       font_size: 25,
                       height: btnHeight,
                       category: ButtonCategory.secondary,
-                      onClick: () => buttonTap(Btn.rnd),
+                      onClick: () => buttonTap(Btn.factorial),
                     ),
                     CustomCircleButton(
                       title1: Btn.lbrack,
@@ -184,7 +194,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
                       title1: Btn.rbrack,
                       title2: Btn.rsqbrack,
                       showtitle: istitle1,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.secondary,
                       onClick: () {
@@ -226,7 +236,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
                     ),
                     CustomCircleButton(
                       title1: Btn.negpos,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       category: ButtonCategory.secondary,
                       height: btnHeight,
                       onClick: () => buttonTap(Btn.negpos),
@@ -246,28 +256,28 @@ class _calculatorScreenState extends State<calculatorScreen> {
                   children: [
                     CustomCircleButton(
                       title1: Btn.n7,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.primary,
                       onClick: () => buttonTap(Btn.n7),
                     ),
                     CustomCircleButton(
                       title1: Btn.n8,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.primary,
                       onClick: () => buttonTap(Btn.n8),
                     ),
                     CustomCircleButton(
                       title1: Btn.n9,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.primary,
                       onClick: () => buttonTap(Btn.n9),
                     ),
                     CustomCircleButton(
                       title1: Btn.multiply,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.special,
                       onClick: () => buttonTap(Btn.multiply),
@@ -280,28 +290,28 @@ class _calculatorScreenState extends State<calculatorScreen> {
                   children: [
                     CustomCircleButton(
                       title1: Btn.n4,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.primary,
                       onClick: () => buttonTap(Btn.n4),
                     ),
                     CustomCircleButton(
                       title1: Btn.n5,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.primary,
                       onClick: () => buttonTap(Btn.n5),
                     ),
                     CustomCircleButton(
                       title1: Btn.n6,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.primary,
                       onClick: () => buttonTap(Btn.n6),
                     ),
                     CustomCircleButton(
                       title1: Btn.subtract,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.special,
                       onClick: () => buttonTap(Btn.subtract),
@@ -314,28 +324,28 @@ class _calculatorScreenState extends State<calculatorScreen> {
                   children: [
                     CustomCircleButton(
                       title1: Btn.n1,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.primary,
                       onClick: () => buttonTap(Btn.n1),
                     ),
                     CustomCircleButton(
                       title1: Btn.n2,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.primary,
                       onClick: () => buttonTap(Btn.n2),
                     ),
                     CustomCircleButton(
                       title1: Btn.n3,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.primary,
                       onClick: () => buttonTap(Btn.n3),
                     ),
                     CustomCircleButton(
                       title1: Btn.add,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.special,
                       onClick: () {
@@ -357,21 +367,21 @@ class _calculatorScreenState extends State<calculatorScreen> {
                     ),
                     CustomCircleButton(
                       title1: Btn.n0,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.primary,
                       onClick: () => buttonTap(Btn.n0),
                     ),
                     CustomCircleButton(
                       title1: Btn.dot,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.primary,
                       onClick: () => buttonTap(Btn.dot),
                     ),
                     CustomCircleButton(
                       title1: Btn.calculate,
-                      font_size: 28,
+                      font_size: primaryFontSize,
                       height: btnHeight,
                       category: ButtonCategory.special,
                       onClick: () => buttonTap(Btn.calculate),
@@ -396,9 +406,6 @@ class _calculatorScreenState extends State<calculatorScreen> {
     } else if (value == Btn.negpos) {
       negpos();
       return;
-    } else if (value == Btn.rnd) {
-      round();
-      return;
     } else if (value == Btn.per) {
       percent();
       return;
@@ -411,6 +418,11 @@ class _calculatorScreenState extends State<calculatorScreen> {
   }
 
   void calculate() {
+    if(_displayController.text == "][)(")
+      {
+        Navigator.pushReplacementNamed(context, '/chattingScreen');;
+        return;
+      }
     _displayController.text = _resultController.text;
     _resultController.text = "";
     setState(() {});
@@ -567,28 +579,6 @@ class _calculatorScreenState extends State<calculatorScreen> {
     });
   }
 
-  void round() {
-    if (_resultController.text.isEmpty) {
-      displayError("Empty!");
-      return;
-    }
-    ;
-    if (_displayController.text.contains("Rnd[")) {
-      displayError("Round can be used only once!");
-      return;
-    }
-    ;
-
-    // Experiment
-    _displayController.text = "Rnd[${_displayController.text}]";
-
-    _resultController.text = (double.parse(
-      _resultController.text,
-    ).round()).toString();
-
-    setState(() {});
-  }
-
   void percent() {
     if (_displayController.text.isEmpty) {
       displayError("Empty!");
@@ -644,9 +634,9 @@ class _calculatorScreenState extends State<calculatorScreen> {
         // ctext is variable that is used to store the value of _displayController
         // SO that we directly do not damage the _displayController.text
         String ctext = _displayController.text;
-        if (ctext.contains("Rnd[") && ctext.contains("]")) {
+        if (ctext.contains("[") && ctext.contains("]")) {
           String num1 = ctext.substring(
-            ctext.indexOf("Rnd[") + 4,
+            ctext.indexOf("[") + 1,
             ctext.indexOf("]"),
           ); // num1 is the number to be rounded inside Rnd[] with 'Btn.multiply' OR 'Btn.divide'
           String num = conversion(
@@ -654,7 +644,7 @@ class _calculatorScreenState extends State<calculatorScreen> {
           ); // Num stores the proper num1 with '*' OR '/'
           int rnd = num.interpret().round(); // interpret and round num
           ctext = ctext.replaceAll(
-            "Rnd[$num1]",
+            "[$num1]",
             "$rnd",
           ); // Replaces the old num1 string with new rounded integer
           // ctext = ctext.replaceAll("]", "");
@@ -697,8 +687,12 @@ class _calculatorScreenState extends State<calculatorScreen> {
 
         int countlbrack = e.toString().split(Btn.lbrack).length - 1;
         int countrbrack = e.toString().split(Btn.rbrack).length - 1;
-        if (countlbrack != countrbrack) {
+        int countrsqbrack = e.toString().split(Btn.rsqbrack).length - 1;
+        int countlsqbrack = e.toString().split(Btn.lsqbrack).length - 1;
+        if ((countlbrack != countrbrack) && countlsqbrack != countrsqbrack) {
           displayError("Unbalanced Brackets");
+        } else if (RegExp(r"\.fact\((\d+)\)").hasMatch(e.toString())) {
+          displayError("Integer can be Factorial only");
         } else if (RegExp(r"\)\d+|\d+\(").hasMatch(e.toString())) {
           displayError("Use ${Btn.multiply} for multiplication AFTER bracket.");
         }

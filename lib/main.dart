@@ -1,20 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:calculator/Screens/calculatorScreen.dart';
-import 'package:calculator/Theme/Theme_constants.dart';
 import 'package:flutter/services.dart';
-import 'package:calculator/Theme/ThemeManager.dart';
+
+//Screen
+import 'Calculator/Screen/calculatorScreen.dart';
+import 'Chat/Screens/ChattingScreen.dart';
+import 'Chat/Screens/SplashScreen.dart';
+import 'Chat/auth/loginScreen.dart';
+
+// Theme
+import 'Theme/Theme_constants.dart';
+import 'Theme/ThemeManager.dart';
+
+//Firebase
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+// Global Initialisation
+late Size mq;
+
+ThemeManager _themeManager = ThemeManager();
 
 void main() {
+
   WidgetsFlutterBinding.ensureInitialized(); // Ensure Flutter is initialized
+  // Initializing Firebase
+  _initializeFirebase();
+
+  // Setting the orientation to portrait
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
 
+  // Run the app
   runApp(MyApp());
 }
-
-ThemeManager _themeManager = ThemeManager();
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -43,8 +63,7 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         // <<< VERY IMPORTANT
       });
-    } else {
-    }
+    } else {}
   }
 
   @override
@@ -55,10 +74,14 @@ class _MyAppState extends State<MyApp> {
       darkTheme: darkTheme,
       themeMode: _themeManager.themeMode,
 
-      initialRoute: '/calculatorScreen',
+      initialRoute: '/splashScreen',
       routes: {
         '/calculatorScreen': (context) => calculatorScreen(),
         '/settingsScreen': (context) => SettingsScreen(),
+        // Chatting App
+        '/chattingScreen': (context) => ChattingScreen(),
+        '/loginScreen' : (context) => LoginScreen(),
+        '/splashScreen' : (context) => SplashScreen(),
       },
     );
   }
@@ -79,7 +102,6 @@ class _settingsScreenState extends State<SettingsScreen> {
         title: Text(
           "Settings",
           style: TextStyle(
-            color: Theme.of(context).primaryColor,
             fontSize: 25,
             letterSpacing: 1.5,
           ),
@@ -87,7 +109,11 @@ class _settingsScreenState extends State<SettingsScreen> {
 
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4.0),
-          child: Container(color: Theme.of(context).primaryColor.withOpacity(0.5), height: 2.5,),
+          child: Container(
+            color: Theme.of(context).primaryColor.withOpacity(0.4),
+            height: 2.3,
+            margin: EdgeInsets.fromLTRB(2, 0, 2, 0),
+          ),
         ),
         centerTitle: true,
       ),
@@ -104,4 +130,10 @@ class _settingsScreenState extends State<SettingsScreen> {
       ),
     );
   }
+}
+
+_initializeFirebase() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }

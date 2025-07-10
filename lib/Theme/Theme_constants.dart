@@ -13,6 +13,14 @@ ThemeData lightTheme = ThemeData(
       color: Colors.black38,
     ),
   ),
+  appBarTheme: AppBarTheme(
+    backgroundColor: Colors.white,
+    foregroundColor: Colors.black,
+    centerTitle: true,
+    elevation: 10,
+    titleTextStyle: TextStyle(fontSize: 20,color: Colors.black),
+    iconTheme: IconThemeData(color: Colors.black),
+  ),
 
   extensions: <ThemeExtension<dynamic>>[
     const AppButtonColors(
@@ -33,12 +41,20 @@ ThemeData darkTheme = ThemeData(
   scaffoldBackgroundColor: Colors.black,
   primaryColor: Colors.white,
   textTheme: TextTheme(
-    headlineLarge: TextStyle(color: Colors.black, fontSize: 50),
+    headlineLarge: TextStyle(color: Colors.white, fontSize: 50),
     headlineMedium: TextStyle(
       fontSize: 40,
       fontWeight: FontWeight.bold,
       color: Colors.white38,
     ),
+  ),
+  appBarTheme: AppBarTheme(
+    backgroundColor: Colors.black,
+    foregroundColor: Colors.white,
+    centerTitle: true,
+    elevation: 10,
+    titleTextStyle: TextStyle(fontSize: 20,color: Colors.white),
+    iconTheme: IconThemeData(color: Colors.white),
   ),
 
   extensions: <ThemeExtension<dynamic>>[
@@ -50,7 +66,7 @@ ThemeData darkTheme = ThemeData(
       secondaryButtonForeground: Colors.white,
       secondarySplashColor: Colors.white54,
       specialOperatorBackground: Color(0xFF2E9CD9), // 2E9CD9
-      specialSplashColor: Colors.lightBlueAccent,
+      specialSplashColor: Color(0xFF42e3f5),
     ),
   ],
 );
