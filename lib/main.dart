@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'Calculator/Screen/calculatorScreen.dart';
 import 'Chat/Screens/ChattingScreen.dart';
 import 'Chat/Screens/SplashScreen.dart';
-import 'Chat/auth/loginScreen.dart';
+import 'Chat/Screens/auth/loginScreen.dart';
 
 // Theme
 import 'Theme/Theme_constants.dart';
